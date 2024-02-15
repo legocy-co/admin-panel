@@ -13,6 +13,7 @@
     "autoprefixer": "^10.4.17",
     "axios": "^1.6.7",
     "clsx": "^2.1.0",
+    "effector": "^23.2.0",
     "postcss": "^8.4.35",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
@@ -33,6 +34,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "prettier": "3.2.5",
+    "sass": "^1.70.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.0"
