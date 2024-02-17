@@ -25,6 +25,7 @@ const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<RootPage />}></Route>
+      <Route path="/sign-in" element={<RootPage />}></Route>
     </Routes>
   );
 };
