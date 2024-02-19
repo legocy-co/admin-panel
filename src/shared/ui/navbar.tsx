@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { NavLink } from 'react-router-dom';
 
 import { IconType } from '../icons';
-import Logo from '../../../public/logo.svg?react';
+import Logo from '../icons/logo.svg?react';
 import LogoutIcon from '../icons/logout.svg?react';
 
 type TNavigationItem = {
@@ -14,7 +14,7 @@ type TNavigationItem = {
 export const Navbar = () => {
   return (
     <nav className="h-full fixed flex justify-between flex-col w-40 bg-white bg-opacity-5 px-2 pt-6 pb-2 overflow-auto">
-      <NavigationItem to="/" Icon={Logo} name="root" />
+      <NavigationItem to="/" Icon={Logo} name="Home" />
       {/*<img src="/logo.svg" alt="" className="mx-auto mb-12 flex-shrink-0" />*/}
       {/*<div className="flex-grow flex flex-col space-y-3">*/}
       {/*  {navigationItemsGroups.map((item) => (*/}
@@ -23,7 +23,7 @@ export const Navbar = () => {
       {/*</div>*/}
       <div className="w-full flex flex-col space-y-2">
         <div className="flex items-center space-x-2">
-          <NavigationItem to="/sign-in" Icon={LogoutIcon} name="Log out" />
+          <NavigationItem to="/auth/logout" Icon={LogoutIcon} name="Log out" />
         </div>
       </div>
     </nav>
@@ -47,7 +47,7 @@ const NavigationItem = ({ to, name, Icon }: TNavigationItem) => {
       {({ isActive }) => (
         <>
           <Icon
-            className={clsx('-translate-y-[1px] w-1/2', {
+            className={clsx('-translate-y-[1px] w-1/2 h-10', {
               '[&>path]:text-primary-default': isActive,
               '[&>path]:group-hover:text-primary-default [&>path]:text-primary-medium':
                 !isActive,

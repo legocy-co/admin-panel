@@ -6,6 +6,9 @@ import {
   navigateChanged,
 } from '../shared/lib/react-router.ts';
 import RootPage from '../pages/RootPage';
+import PrivateRoute from './PrivateRoot.tsx';
+import LogoutPage from '../pages/LogoutPage';
+import SignInPage from '../pages/SignInPage';
 
 const AppRouter = () => {
   const navigate = useNavigate();
@@ -24,8 +27,16 @@ const AppRouter = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<RootPage />}></Route>
-      <Route path="/sign-in" element={<RootPage />}></Route>
+      <Route path="auth/sign-in" element={<SignInPage />} />
+      <Route path="auth/logout" element={<LogoutPage />} />
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <RootPage />
+          </PrivateRoute>
+        }
+      ></Route>
     </Routes>
   );
 };
