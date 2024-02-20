@@ -1,4 +1,11 @@
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { history } from './history.ts';
 import { useEffect } from 'react';
 import {
@@ -9,6 +16,8 @@ import RootPage from '../pages/RootPage';
 import PrivateRoute from './PrivateRoot.tsx';
 import LogoutPage from '../pages/LogoutPage';
 import SignInPage from '../pages/SignInPage';
+import LegoSetsPage from '../pages/lego-sets';
+import LegoSetDetailPage from '../pages/lego-sets/detail';
 
 const AppRouter = () => {
   const navigate = useNavigate();
@@ -29,6 +38,7 @@ const AppRouter = () => {
     <Routes>
       <Route path="auth/sign-in" element={<SignInPage />} />
       <Route path="auth/logout" element={<LogoutPage />} />
+
       <Route
         path="/"
         element={
@@ -36,7 +46,13 @@ const AppRouter = () => {
             <RootPage />
           </PrivateRoute>
         }
-      ></Route>
+      >
+        <Route index element={<Navigate to="wiki/sets" />} />
+        <Route path="wiki/sets" element={<Outlet />}>
+          <Route index element={<LegoSetsPage />} />
+          <Route path=":id" element={<LegoSetDetailPage />} />
+        </Route>
+      </Route>
     </Routes>
   );
 };

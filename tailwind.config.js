@@ -17,7 +17,10 @@ export default {
         'light': '#5F5F5F',
         'ghost': '#F8F8F8',
         'dark': '#2f2f2f',
-      }
+      },
+      gridTemplateColumns: {
+        'auto-1fr': 'auto 1fr',
+      },
     },
   },
   plugins: [],

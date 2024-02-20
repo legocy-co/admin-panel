@@ -1,5 +1,17 @@
 import { SignInForm } from '../types/SignIn.ts';
 import axios, { AxiosError } from 'axios';
+import { ZodError } from 'zod';
+import toaster from '../shared/lib/react-toastify.ts';
+
+const handleIncorrectParse = (
+  e: ZodError,
+  consolePrefix: string,
+  toasterMessage: string
+): Promise<never> => {
+  console.error(consolePrefix + ': cannot parse incoming data:', e);
+  toaster.showToastError(toasterMessage + ': incorrect incoming data');
+  return Promise.reject(e.format());
+};
 
 const handleUserError = (
   e: unknown,
@@ -25,4 +37,4 @@ const handleUserError = (
   return Promise.reject(e);
 };
 
-export { handleUserError };
+export { handleIncorrectParse, handleUserError };
