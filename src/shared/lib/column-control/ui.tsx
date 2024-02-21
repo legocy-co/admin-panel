@@ -18,7 +18,7 @@ export const ColumnControl = ({ model }: Props) => {
         <button
           type="button"
           className={
-            'w-10 h-10 transition-opacity hover:opacity-90 active:opacity-80 '
+            'w-10 h-10 transition-opacity hover:opacity-90 active:opacity-80 flex flex-col items-center'
           }
         >
           <img src={ColumnsIcon} className="-translate-y-0.5" alt="" />

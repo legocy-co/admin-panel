@@ -4,7 +4,7 @@
   top: 0;
   height: 100%;
   width: 4px;
-  background: #8f9900;
+  background: #FFD540;
   cursor: col-resize;
   user-select: none;
   touch-action: none;
@@ -12,7 +12,7 @@
 }
 
 .resizer.isResizing {
-  background: #f4ff58 !important;
+  background: #f5cc3c !important;
 }
 
 @media (hover: hover) {

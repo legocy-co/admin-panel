@@ -56,7 +56,7 @@ persist({
 
 export const Navbar = () => {
   return (
-    <nav className="h-screen flex justify-between flex-col max-w-64 bg-white bg-opacity-5 px-2 pt-6 pb-2 overflow-auto">
+    <nav className="h-screen flex justify-between flex-col w-40 bg-white bg-opacity-5 px-2 pt-6 pb-2 overflow-auto">
       <img src="/logo.svg" alt="" className="mx-auto mb-12 flex-shrink-0" />
       <div className="flex-grow flex flex-col space-y-3">
         {navigationItemsGroups.map((item) => (

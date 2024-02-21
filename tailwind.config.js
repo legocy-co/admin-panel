@@ -3,6 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{html,ts,tsx,js,jsx}'],
   theme: {
     extend: {
+      fontSize: {
+        'bh': '2.5rem',
+      },
       colors: {
         'slate': '#3C3A3A',
         'charcoal': '#2C2828',

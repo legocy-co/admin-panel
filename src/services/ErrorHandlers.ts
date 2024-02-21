@@ -2,6 +2,7 @@ import { SignInForm } from '../types/SignIn.ts';
 import axios, { AxiosError } from 'axios';
 import { ZodError } from 'zod';
 import toaster from '../shared/lib/react-toastify.ts';
+import { LegoSet, LegoSetForm } from '../types/LegoSetType.ts';
 
 const handleIncorrectParse = (
   e: ZodError,
@@ -37,4 +38,28 @@ const handleUserError = (
   return Promise.reject(e);
 };
 
-export { handleIncorrectParse, handleUserError };
+const handleSetError = (
+  e: unknown,
+  consolePrefix: string,
+  form: LegoSetForm
+): Promise<never> => {
+  if (axios.isAxiosError(e)) {
+    const err = e as AxiosError;
+    const errorMessage = (err.response?.data as any)?.error ?? err.message;
+    console.error(
+      `${consolePrefix}: code = ${err.response?.status}, msg = ${errorMessage}`
+    );
+
+    form.fields.name.addError({
+      rule: '',
+      errorText: errorMessage,
+    });
+
+    return Promise.reject(err.message);
+  }
+
+  console.error(`${consolePrefix}: undefined error: `, e);
+  return Promise.reject(e);
+};
+
+export { handleIncorrectParse, handleUserError, handleSetError };

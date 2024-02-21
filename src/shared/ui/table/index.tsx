@@ -69,7 +69,7 @@ export const Table = <T,>({
   });
 
   return (
-    <div className="overflow-x-auto flex justify-center">
+    <div className="overflow-x-auto flex">
       <table
         style={{
           width: table.getCenterTotalSize(),
