@@ -2,7 +2,7 @@ import { SignInForm } from '../types/SignIn.ts';
 import axios, { AxiosError } from 'axios';
 import { ZodError } from 'zod';
 import toaster from '../shared/lib/react-toastify.ts';
-import { LegoSet, LegoSetForm } from '../types/LegoSetType.ts';
+import { LegoSetForm } from '../types/LegoSetType.ts';
 
 const handleIncorrectParse = (
   e: ZodError,

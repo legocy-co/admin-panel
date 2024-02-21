@@ -19,6 +19,7 @@ import SignInPage from '../pages/SignInPage';
 import LegoSetsPage from '../pages/lego-sets';
 import LegoSetDetailPage from '../pages/lego-sets/detail';
 import AddLegoSetPage from '../pages/lego-sets/add';
+import UpdateLegoSetPage from '../pages/lego-sets/update';
 
 const AppRouter = () => {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ const AppRouter = () => {
           <Route index element={<LegoSetsPage />} />
           <Route path="add" element={<AddLegoSetPage />} />
           <Route path=":id" element={<LegoSetDetailPage />} />
+          <Route path="update/:id" element={<UpdateLegoSetPage />} />
         </Route>
       </Route>
     </Routes>

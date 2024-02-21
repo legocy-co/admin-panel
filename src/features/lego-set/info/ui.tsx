@@ -4,6 +4,7 @@ import * as model from './model.ts';
 import { useState } from 'react';
 import { addDefaultSrc } from '../../../services/utils.ts';
 import GalleryModal from '../../../components/GalleryModal';
+import { Button } from '../../../shared/ui/button.tsx';
 
 export const LegoSetDetailInfo = () => {
   const params = useParams<'id'>();
@@ -48,6 +49,9 @@ export const LegoSetDetailInfo = () => {
               {legoSet.number}
             </span>
           </p>
+          <Button onClick={() => navigate('/wiki/sets/update/' + legoSet.id)}>
+            Edit set
+          </Button>
         </div>
       </div>
       {showGallery > -1 && legoSet.images && (

@@ -8,8 +8,7 @@ const RootPage = () => {
     <>
       <div className="w-full h-screen grid grid-cols-auto-1fr">
         <Navbar />
-
-        <div className="w-full px-7 py-7 overflow-x-hidden overflow-y-auto">
+        <div className="w-full px-10 py-10 overflow-x-hidden overflow-y-auto">
           <Outlet />
         </div>
       </div>
