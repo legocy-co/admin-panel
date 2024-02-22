@@ -1,21 +1,20 @@
 import { Outlet } from 'react-router-dom';
-import { clsx } from 'clsx';
 import { Navbar } from '../../shared/ui/navbar';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RootPage = () => {
-  const isOpenedInIframe = window.self !== window.top;
-
   return (
-    <div className="w-full h-full">
-      {!isOpenedInIframe && <Navbar />}
-      <div
-        className={clsx('w-full px-6 py-5 overflow-x-hidden overflow-y-auto', {
-          'col-span-2': isOpenedInIframe,
-        })}
-      >
-        <Outlet />
+    <>
+      <div className="w-full h-screen grid grid-cols-auto-1fr">
+        <Navbar />
+        <div className="w-full px-10 py-10 overflow-x-hidden overflow-y-auto">
+          <Outlet />
+        </div>
       </div>
-    </div>
+      <ToastContainer />
+      <div id="portal_root" />
+    </>
   );
 };
 
