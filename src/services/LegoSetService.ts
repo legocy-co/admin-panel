@@ -15,6 +15,8 @@ interface LegoSetService {
     id: number | string
   ) => Promise<boolean>;
   DeleteLegoSet: (id: number | string) => Promise<boolean>;
+  DeleteImage: (id: number | string) => Promise<boolean>;
+  UploadImage: (file: FormData, legoSetId: number | string) => Promise<boolean>;
 }
 
 const GetLegoSetsPage = async (
@@ -94,6 +96,31 @@ const DeleteLegoSet = async (id: number | string): Promise<boolean> => {
   }
 };
 
+const DeleteImage = async (id: number | string): Promise<boolean> => {
+  try {
+    await axios.delete('/admin/sets/images/' + id);
+    toaster.showToastSuccess('Image deleted');
+
+    return Promise.resolve(true);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const UploadImage = async (
+  file: FormData,
+  legoSetId: number | string
+): Promise<boolean> => {
+  try {
+    await axios.post('/admin/sets/images/' + legoSetId, file);
+    toaster.showToastSuccess('Image uploaded');
+
+    return Promise.resolve(true);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 export const legoSetService: LegoSetService = {
   GetLegoSetsPage: GetLegoSetsPage,
   GetLegoSets: GetLegoSets,
@@ -101,4 +128,6 @@ export const legoSetService: LegoSetService = {
   CreateLegoSet: CreateLegoSet,
   UpdateLegoSet: UpdateLegoSet,
   DeleteLegoSet: DeleteLegoSet,
+  DeleteImage: DeleteImage,
+  UploadImage: UploadImage,
 };

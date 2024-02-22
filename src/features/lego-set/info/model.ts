@@ -1,6 +1,6 @@
 import { createGate } from 'effector-react';
 import { NavigateFunction } from 'react-router-dom';
-import { attach, createStore, sample } from 'effector';
+import { attach, createEvent, createStore, sample } from 'effector';
 import { legoSetService } from '../../../services/LegoSetService.ts';
 import { LegoSet } from '../../../types/LegoSetType.ts';
 
@@ -27,6 +27,8 @@ export const $legoSetDetail = createStore<LegoSetDetail>({
   series: '',
 });
 
+export const imagesChanged = createEvent();
+
 const GetLegoSetFx = attach({
   source: gate.state.map(({ id }) => id),
   effect: (id) => {
@@ -49,7 +51,7 @@ function toDetail(set: LegoSet): LegoSetDetail {
 }
 
 sample({
-  clock: gate.open,
+  clock: [gate.open, imagesChanged],
   target: GetLegoSetFx,
 });
 

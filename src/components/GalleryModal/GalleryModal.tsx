@@ -7,10 +7,20 @@ interface GalleryModalProps {
   list: string[];
   i: number;
   onClose: (e: React.MouseEvent) => void;
+  changeable?: boolean;
+  onUpload?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onDelete?: (e: React.MouseEvent) => void;
 }
 
 const GalleryModal = (props: GalleryModalProps) => {
-  const { list, i, onClose }: GalleryModalProps = {
+  const {
+    list,
+    i,
+    onClose,
+    changeable = false,
+    onUpload,
+    // onDelete,
+  }: GalleryModalProps = {
     ...props,
   };
 
@@ -64,6 +74,22 @@ const GalleryModal = (props: GalleryModalProps) => {
       )}
       <div className="gallery--list" onClick={(e) => e.stopPropagation()}>
         {listElement}
+
+        {changeable && (
+          <div>
+            <input
+              accept=".jpg, .jpeg, .png"
+              className="hidden"
+              type="file"
+              name="input_image"
+              id="input_image"
+              onChange={onUpload}
+            />
+            <label htmlFor="input_image" className="gallery--list_input">
+              +
+            </label>
+          </div>
+        )}
       </div>
     </div>,
     modalElement

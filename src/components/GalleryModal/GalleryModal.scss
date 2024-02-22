@@ -51,6 +51,7 @@ $gallery-background: #191515cc;
     margin-top: 50px;
     display: flex;
     justify-items: center;
+    align-items: center;
     gap: 10px;
 
     &_member {
@@ -61,6 +62,19 @@ $gallery-background: #191515cc;
       background-color: $gallery-background;
       &:hover {opacity: 0.9}
       &:active {opacity: 0.8}
+    }
+
+    &_input {
+      text-align: center;
+      cursor: pointer;
+      background: #FFD540;
+      padding: 0 5px;
+      border-radius: 100%;
+      color: black;
+      transition: background-color;
+      &:hover {background: #f3cb3c}
+      &:active {background: #e5bf38
+      }
     }
   }
 }
