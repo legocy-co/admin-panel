@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { LegoSetImageSchema } from './LegoSetImage.ts';
-import { LegoSeriesSchema } from './LegoSeries.ts';
+import { LegoSetImageSchema } from './LegoSetImageType.ts';
+import { LegoSeriesSchema } from './LegoSeriesType.ts';
 import { Form } from 'effector-forms';
 
 export type LegoSetData = {

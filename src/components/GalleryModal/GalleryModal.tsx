@@ -9,7 +9,7 @@ interface GalleryModalProps {
   onClose: (e: React.MouseEvent) => void;
   changeable?: boolean;
   onUpload?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onDelete?: (e: React.MouseEvent) => void;
+  onDelete?: (i: number) => void;
 }
 
 const GalleryModal = (props: GalleryModalProps) => {
@@ -19,7 +19,7 @@ const GalleryModal = (props: GalleryModalProps) => {
     onClose,
     changeable = false,
     onUpload,
-    // onDelete,
+    onDelete,
   }: GalleryModalProps = {
     ...props,
   };
@@ -31,14 +31,27 @@ const GalleryModal = (props: GalleryModalProps) => {
   );
 
   const listElement = list.map((img, i) => (
-    <img
-      key={'gallery-' + i}
-      className="gallery--list_member"
-      src={img}
-      onError={addDefaultSrc}
-      alt=""
-      onClick={() => setIndex(i)}
-    />
+    <div className="relative" key={'gallery-' + i}>
+      <img
+        className="gallery--list_member"
+        src={img}
+        onError={addDefaultSrc}
+        alt=""
+        onClick={() => setIndex(i)}
+      />
+      {changeable && onDelete && (
+        <div
+          className="gallery--list_delete"
+          onClick={(e) => {
+            e.stopPropagation();
+            index === i && setIndex(index - 1);
+            onDelete(i);
+          }}
+        >
+          x
+        </div>
+      )}
+    </div>
   ));
 
   if (!modalElement) return null;

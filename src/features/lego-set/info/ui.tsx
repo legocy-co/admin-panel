@@ -27,13 +27,18 @@ export const LegoSetDetailInfo = () => {
     }
   }
 
+  async function handleImageDelete(i: number) {
+    await legoSetService.DeleteImage(legoSet.images![i].id);
+    model.imagesChanged();
+  }
+
   return (
     <>
       <div className="mt-8 mb-9 whitespace-nowrap flex flex-col gap-7">
         {legoSet.images ? (
           <img
             className="w-[300px] md:w-[595px] h-[200px] md:h-[470px] object-cover object-center rounded-md bg-silver cursor-pointer transition-opacity hover:opacity-90 active:opacity-80"
-            src={'' + legoSet.images?.slice(0, 1)}
+            src={'' + legoSet.images?.slice(0, 1).map((img) => img.image_url)}
             onError={addDefaultSrc}
             onClick={() => setShowGallery(0)}
             alt=""
@@ -87,8 +92,8 @@ export const LegoSetDetailInfo = () => {
         <GalleryModal
           changeable
           onUpload={handleImageUpload}
-          // onDelete={handleImageDelete}
-          list={legoSet.images}
+          onDelete={handleImageDelete}
+          list={legoSet.images.map((img) => img.image_url)}
           i={showGallery}
           onClose={() => setShowGallery(-1)}
         />

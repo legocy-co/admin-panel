@@ -1,12 +1,12 @@
-import { LegoSeries, LegoSeriesSchema } from '../types/LegoSeries.ts';
+import { LegoSeriesType, LegoSeriesSchema } from '../types/LegoSeriesType.ts';
 import axios from 'axios';
 import { handleIncorrectParse } from './ErrorHandlers.ts';
 
 interface LegoSeriesService {
-  GetLegoSeriesList: () => Promise<LegoSeries[]>;
+  GetLegoSeriesList: () => Promise<LegoSeriesType[]>;
 }
 
-const GetLegoSeriesList = async (): Promise<LegoSeries[]> => {
+const GetLegoSeriesList = async (): Promise<LegoSeriesType[]> => {
   const response = await axios.get<object[]>('/series/');
   const result = LegoSeriesSchema.array().safeParse(response.data);
   if (!result.success)

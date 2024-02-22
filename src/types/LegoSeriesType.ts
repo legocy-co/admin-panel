@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export type LegoSeries = z.infer<typeof LegoSeriesSchema>;
+export type LegoSeriesType = z.infer<typeof LegoSeriesSchema>;
 
 export const LegoSeriesSchema = z.object({
   id: z.number(),

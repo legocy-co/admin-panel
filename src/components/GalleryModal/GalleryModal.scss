@@ -73,8 +73,22 @@ $gallery-background: #191515cc;
       color: black;
       transition: background-color;
       &:hover {background: #f3cb3c}
-      &:active {background: #e5bf38
-      }
+      &:active {background: #e5bf38}
+    }
+
+    &_delete {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      padding: 2px 5px;
+      cursor: pointer;
+      font-size: 12px;
+      color: black;
+      border-radius: 100%;
+      background: #cccccc;
+      transition: opacity 0.1s;
+      &:hover {opacity: 0.9}
+      &:active {opacity: 0.8}
     }
   }
 }

@@ -3,10 +3,11 @@ import { NavigateFunction } from 'react-router-dom';
 import { attach, createEvent, createStore, sample } from 'effector';
 import { legoSetService } from '../../../services/LegoSetService.ts';
 import { LegoSet } from '../../../types/LegoSetType.ts';
+import { LegoSetImage } from '../../../types/LegoSetImageType.ts';
 
 type LegoSetDetail = {
   id: number;
-  images?: string[];
+  images?: LegoSetImage[];
   pieces: number;
   name: string;
   number: number;
@@ -40,9 +41,9 @@ const GetLegoSetFx = attach({
 function toDetail(set: LegoSet): LegoSetDetail {
   return {
     id: set.id,
-    images: set.images
-      ?.sort((current, next) => Number(current.is_main) - Number(next.is_main))
-      .map((img) => img.image_url),
+    images: set.images?.sort(
+      (current, next) => Number(current.is_main) - Number(next.is_main)
+    ),
     name: set.name,
     number: set.number,
     pieces: set.n_pieces,
