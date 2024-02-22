@@ -2,7 +2,7 @@ import axios from 'axios';
 import { handleIncorrectParse, handleSetError } from './ErrorHandlers.ts';
 import { PaginationData } from '../types/pagination.ts';
 import { LegoSet, LegoSetData, LegoSetSchema } from '../types/LegoSetType.ts';
-import toaster from '../shared/lib/react-toastify.ts';
+import toaster from '../shared/lib/toast/react-toastify.ts';
 import { lsf } from '../features/lego-set/index.tsx';
 
 interface LegoSetService {
@@ -14,6 +14,7 @@ interface LegoSetService {
     legoSet: LegoSetData,
     id: number | string
   ) => Promise<boolean>;
+  DeleteLegoSet: (id: number | string) => Promise<boolean>;
 }
 
 const GetLegoSetsPage = async (
@@ -82,10 +83,22 @@ const UpdateLegoSet = async (
   }
 };
 
+const DeleteLegoSet = async (id: number | string): Promise<boolean> => {
+  try {
+    await axios.delete('/admin/sets/' + id);
+    toaster.showToastSuccess('Lego set deleted');
+
+    return Promise.resolve(true);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 export const legoSetService: LegoSetService = {
   GetLegoSetsPage: GetLegoSetsPage,
   GetLegoSets: GetLegoSets,
   GetLegoSet: GetLegoSet,
   CreateLegoSet: CreateLegoSet,
   UpdateLegoSet: UpdateLegoSet,
+  DeleteLegoSet: DeleteLegoSet,
 };
