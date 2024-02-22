@@ -2,7 +2,7 @@ import axios from 'axios';
 import { handleIncorrectParse, handleSetError } from './ErrorHandlers.ts';
 import { PaginationData } from '../types/pagination.ts';
 import { LegoSet, LegoSetData, LegoSetSchema } from '../types/LegoSetType.ts';
-import toaster from '../shared/lib/toast/react-toastify.ts';
+import toaster from '../shared/lib/react-toastify.ts';
 import { lsf } from '../features/lego-set/index.tsx';
 
 interface LegoSetService {

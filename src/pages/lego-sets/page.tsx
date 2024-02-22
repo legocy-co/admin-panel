@@ -7,6 +7,7 @@ import { Table } from '../../shared/ui/table';
 import { useNavigate } from 'react-router-dom';
 import { useColumns } from './columns.tsx';
 import { Button } from '../../shared/ui/button.tsx';
+import { DeleteLegoSet } from '../../features/lego-set/delete';
 
 export const LegoSetsPage = () => {
   useGate(model.gate);
@@ -31,6 +32,7 @@ export const LegoSetsPage = () => {
         <Content />
       </div>
       <Pagination.View model={model.paginationModel} />
+      <DeleteLegoSet />
     </div>
   );
 };

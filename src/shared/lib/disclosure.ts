@@ -6,15 +6,13 @@ type Props = {
 
 export function createDisclosure(options: Props = {}) {
   const { defaultIsOpen = false } = options;
-
-  const toggle = createEvent();
-
   const $isOpen = createStore(defaultIsOpen);
   const { open, close } = createApi($isOpen, {
     open: () => true,
     close: () => false,
   });
 
+  const toggle = createEvent();
   $isOpen.on(toggle, (isOpen) => !isOpen);
 
   return {

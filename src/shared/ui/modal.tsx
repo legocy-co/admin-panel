@@ -28,11 +28,11 @@ export const Modal = ({
         <Dialog.Content
           className={clsx(
             className,
-            'data-[state=open]:animate-contentShow fixed top-1/2 left-1/2 max-h-[85vh] w-[90vw] max-w-3xl -translate-x-1/2 -translate-y-1/2 rounded-md bg-neutral-85 p-6 focus:outline-none z-50'
+            'data-[state=open]:animate-contentShow text-white fixed top-1/2 left-1/2 max-h-[85vh] w-[90vw] max-w-3xl -translate-x-1/2 -translate-y-1/2 rounded-md bg-neutral-85 p-6 focus:outline-none z-50'
           )}
         >
           <Dialog.Title asChild>
-            <p className="text-xl mb-8">{title}</p>
+            <p className="text-xl  mb-8">{title}</p>
           </Dialog.Title>
 
           {children}

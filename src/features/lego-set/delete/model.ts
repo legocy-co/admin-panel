@@ -1,10 +1,6 @@
 import { createDisclosure } from '../../../shared/lib/disclosure.ts';
 import { createEffect, createEvent, restore, sample } from 'effector';
 import { legoSetService } from '../../../services/LegoSetService.ts';
-import {
-  showErrorToastFx,
-  showSuccessToastFx,
-} from '../../../shared/lib/toast/toast-effects.ts';
 
 export const disclosure = createDisclosure();
 
@@ -35,18 +31,5 @@ sample({
 sample({
   clock: deleteFx.done,
   fn: ({ params }) => +params,
-  target: [
-    disclosure.close,
-    showSuccessToastFx.prepend(() => ({
-      title: 'Lego set deleted',
-    })),
-    deleted,
-  ],
-});
-
-sample({
-  clock: deleteFx.fail,
-  target: showErrorToastFx.prepend(() => ({
-    title: 'Error occurred',
-  })),
+  target: [disclosure.close, deleted],
 });

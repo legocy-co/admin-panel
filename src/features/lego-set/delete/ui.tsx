@@ -20,8 +20,7 @@ export const DeleteLegoSet = () => {
         Do you really want to delete lego set{' '}
         <b className="font-medium">{name}</b>?
       </p>
-
-      <div className="flex flex-col">
+      <div className="flex gap-2">
         <Button onClick={() => model.disclosure.close()}>Cancel</Button>
         <Button onClick={() => model.deleteLegoSet()}>Delete</Button>
       </div>

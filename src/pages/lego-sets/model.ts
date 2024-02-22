@@ -6,6 +6,7 @@ import { createEffect } from 'effector/compat';
 import { legoSetService } from '../../services/LegoSetService.ts';
 import { Pagination } from '../../shared/lib/pagination';
 import { stringifyParams } from '../../services/utils.ts';
+import { deleted } from '../../features/lego-set/delete/model.ts';
 
 export const gate = createGate();
 
@@ -44,7 +45,7 @@ const GetLegoSetsPageFx = attach({
 });
 
 sample({
-  clock: [gate.open, paginationModel.$pageSize, paginationModel.$page],
+  clock: [gate.open, paginationModel.$pageSize, paginationModel.$page, deleted],
   filter: gate.status,
   target: GetLegoSetsPageFx,
 });
