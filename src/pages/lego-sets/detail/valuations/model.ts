@@ -1,8 +1,8 @@
 import { createGate } from 'effector-react';
 import { NavigateFunction } from 'react-router-dom';
-import { Valuation } from '../../../types/ValuationType.ts';
+import { Valuation } from '../../../../types/ValuationType.ts';
 import { attach, createStore, sample } from 'effector';
-import { valuationService } from '../../../services/ValuationService.ts';
+import { valuationService } from '../../../../services/ValuationService.ts';
 
 type DetailValuation = {
   valuation: number;
@@ -21,7 +21,7 @@ const GetValuationsFx = attach({
   source: gate.state.map(({ id }) => id),
   effect: (legoSetID) => {
     if (!legoSetID) throw new Error('No id provided');
-    return valuationService.GetValuations(legoSetID);
+    return valuationService.GetLegoSetValuations(legoSetID);
   },
 });
 

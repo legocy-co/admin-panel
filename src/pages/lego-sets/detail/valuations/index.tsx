@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import Loader from '../../../shared/ui/loader.tsx';
+import Loader from '../../../../shared/ui/loader.tsx';
 
 export { LegoSetDetailValuations } from './ui.tsx';
 export * as lsv from './model.ts';

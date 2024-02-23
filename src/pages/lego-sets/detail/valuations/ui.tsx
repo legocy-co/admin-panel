@@ -1,7 +1,8 @@
 import { useGate, useUnit } from 'effector-react';
 import * as model from './model.ts';
 import { useNavigate, useParams } from 'react-router-dom';
-import { setStates } from '../../../types/MarketItemType.ts';
+import { setStates } from '../../../../types/MarketItemType.ts';
+import { ValuationForm } from '../../../../features/valuation';
 
 export const LegoSetDetailValuations = () => {
   const params = useParams<'id'>();
@@ -17,12 +18,18 @@ export const LegoSetDetailValuations = () => {
           {setStates[state as keyof typeof setStates]}
         </p>
       </div>
-      <p className="text-2xl">
-        {detailValuations.find((valuation) => valuation.state === state)
-          ? detailValuations.find((valuation) => valuation.state === state)
-              ?.valuation + ' $'
-          : 'Not estimated'}
-      </p>
+      <div className="text-2xl">
+        {detailValuations.find((valuation) => valuation.state === state) ? (
+          detailValuations.find((valuation) => valuation.state === state)
+            ?.valuation + ' $'
+        ) : (
+          <ValuationForm
+            lego_set_id={params.id ?? null}
+            state={state}
+            id={'form-' + state}
+          />
+        )}
+      </div>
     </div>
   ));
 
