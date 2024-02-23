@@ -23,11 +23,7 @@ export const LegoSetDetailValuations = () => {
           detailValuations.find((valuation) => valuation.state === state)
             ?.valuation + ' $'
         ) : (
-          <ValuationForm
-            lego_set_id={params.id ?? null}
-            state={state}
-            id={'form-' + state}
-          />
+          <ValuationForm lego_set_id={params.id ?? null} state={state} />
         )}
       </div>
     </div>

@@ -23,7 +23,7 @@ export const form = createForm({
             .min(1)
             .nonnegative()
             .nullable()
-            .refine((value) => value !== null, 'Missing number of pieces'),
+            .refine((value) => value !== null, 'Missing valuation'),
         }),
       ],
     },

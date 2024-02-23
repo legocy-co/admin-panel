@@ -1,11 +1,11 @@
 import { lazy, Suspense } from 'react';
 import Loader from '../../../../shared/ui/loader.tsx';
 
-export { LegoSetDetailValuations } from './ui.tsx';
+export { LegoSetDetailValuations } from './page.tsx';
 export * as lsv from './model.ts';
 
 const LegoSetDetailValuations = lazy(() =>
-  import('./ui.tsx').then((page) => ({
+  import('./page.tsx').then((page) => ({
     default: page.LegoSetDetailValuations,
   }))
 );
