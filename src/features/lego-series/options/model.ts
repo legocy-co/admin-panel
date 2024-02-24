@@ -13,7 +13,9 @@ export const GetLegoSeriesFx = createEffect(() =>
 
 export const $legoSeriesOptions = createStore<LegoSeriesOption[]>([]);
 
-export function toLegoSeriesOptions(legoSer: LegoSeriesType[]): LegoSeriesOption[] {
+export function toLegoSeriesOptions(
+  legoSer: LegoSeriesType[]
+): LegoSeriesOption[] {
   return legoSer.map((legoSer) => ({
     id: String(legoSer.id),
     name: legoSer.name,

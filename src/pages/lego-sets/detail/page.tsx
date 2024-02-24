@@ -1,8 +1,8 @@
-import { LegoSetDetailInfoRoute } from '../../../features/lego-set/info';
+import { LegoSetDetailInfoRoute } from './info';
 import { PageHeading } from '../../../shared/ui/page-heading.tsx';
 import { MenuButton } from '../../../shared/ui/menu-button.tsx';
 import { useState } from 'react';
-import { LegoSetDetailValuationsRoute } from '../../../features/lego-set/valuations';
+import { LegoSetDetailValuationsRoute } from './valuations';
 
 export const LegoSetDetailPage = () => {
   const [valuationsTab, setValuationsTab] = useState(false);

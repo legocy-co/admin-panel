@@ -1,9 +1,9 @@
 import { createGate } from 'effector-react';
 import { NavigateFunction } from 'react-router-dom';
 import { attach, createEvent, createStore, sample } from 'effector';
-import { legoSetService } from '../../../services/LegoSetService.ts';
-import { LegoSet } from '../../../types/LegoSetType.ts';
-import { LegoSetImage } from '../../../types/LegoSetImageType.ts';
+import { legoSetService } from '../../../../services/LegoSetService.ts';
+import { LegoSet } from '../../../../types/LegoSetType.ts';
+import { LegoSetImage } from '../../../../types/LegoSetImageType.ts';
 
 type LegoSetDetail = {
   id: number;

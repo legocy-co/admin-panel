@@ -1,12 +1,24 @@
-import { Valuation, ValuationSchema } from '../types/ValuationType.ts';
+import {
+  Valuation,
+  ValuationData,
+  ValuationSchema,
+} from '../types/ValuationType.ts';
 import axios from 'axios';
 import { handleIncorrectParse } from './ErrorHandlers.ts';
+import toaster from '../shared/lib/react-toastify.ts';
 
 export interface ValuationService {
-  GetValuations: (legoSetID: number | string) => Promise<Valuation[]>;
+  GetLegoSetValuations: (legoSetID: number | string) => Promise<Valuation[]>;
+  CreateValuation: (data: ValuationData) => Promise<boolean>;
+  GetValuation: (id: number | string) => Promise<Valuation>;
+  UpdateValuation: (
+    data: ValuationData,
+    id: number | string
+  ) => Promise<boolean>;
+  DeleteValuation: (id: number | string) => Promise<boolean>;
 }
 
-const GetValuations = async (
+const GetLegoSetValuations = async (
   legoSetID: number | string
 ): Promise<Valuation[]> => {
   const response = await axios.get<object[]>('/sets-valuations/' + legoSetID);
@@ -14,13 +26,63 @@ const GetValuations = async (
   if (!result.success)
     return handleIncorrectParse(
       result.error,
-      'GetValuations',
+      'GetLegoSetValuations',
       "Can't get valuations"
     );
 
   return result.data;
 };
 
+const CreateValuation = async (data: ValuationData): Promise<boolean> => {
+  try {
+    await axios.post('/admin/sets-valuations/', data);
+    toaster.showToastSuccess('Valuation created');
+    return Promise.resolve(true);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const GetValuation = async (id: number | string): Promise<Valuation> => {
+  const response = await axios.get<object>('/admin/sets-valuations/' + id);
+  const result = ValuationSchema.safeParse(response.data);
+  if (!result.success)
+    return handleIncorrectParse(
+      result.error,
+      'GetValuation',
+      "Can't get valuations"
+    );
+
+  return result.data;
+};
+
+const UpdateValuation = async (
+  data: ValuationData,
+  id: number | string
+): Promise<boolean> => {
+  try {
+    await axios.put('/admin/sets-valuations/' + id, data);
+    toaster.showToastSuccess('Valuation updated');
+    return Promise.resolve(true);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const DeleteValuation = async (id: number | string): Promise<boolean> => {
+  try {
+    await axios.delete('/admin/sets-valuations/' + id);
+    toaster.showToastSuccess('Valuation deleted');
+    return Promise.resolve(true);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 export const valuationService: ValuationService = {
-  GetValuations: GetValuations,
+  GetLegoSetValuations: GetLegoSetValuations,
+  CreateValuation: CreateValuation,
+  GetValuation: GetValuation,
+  UpdateValuation: UpdateValuation,
+  DeleteValuation: DeleteValuation,
 };

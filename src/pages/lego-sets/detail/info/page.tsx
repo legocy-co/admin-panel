@@ -2,12 +2,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGate, useUnit } from 'effector-react';
 import * as model from './model.ts';
 import React, { useState } from 'react';
-import { addDefaultSrc } from '../../../services/utils.ts';
-import GalleryModal from '../../../components/GalleryModal';
-import { Button } from '../../../shared/ui/button.tsx';
-import { legoSetService } from '../../../services/LegoSetService.ts';
+import { addDefaultSrc } from '../../../../services/utils.ts';
+import GalleryModal from '../../../../components/GalleryModal';
+import { Button } from '../../../../shared/ui/button.tsx';
+import { legoSetService } from '../../../../services/LegoSetService.ts';
 
-export const LegoSetDetailInfo = () => {
+export const LegoSetDetailInfoPage = () => {
   const params = useParams<'id'>();
   const navigate = useNavigate();
 

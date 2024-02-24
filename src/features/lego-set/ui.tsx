@@ -46,7 +46,7 @@ export const LegoSetForm = () => {
           label: ser.name,
         }))}
       />
-      <div className="flex justify-center">
+      <div className="relative flex justify-center">
         {!eachValid && (
           <FormError>
             {fields.n_pieces.errorText() ||
