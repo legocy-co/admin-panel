@@ -7,7 +7,7 @@ import GalleryModal from '../../../../components/GalleryModal';
 import { Button } from '../../../../shared/ui/button.tsx';
 import { legoSetService } from '../../../../services/LegoSetService.ts';
 
-export const LegoSetDetailInfo = () => {
+export const LegoSetDetailInfoPage = () => {
   const params = useParams<'id'>();
   const navigate = useNavigate();
 

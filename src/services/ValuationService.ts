@@ -5,6 +5,7 @@ import {
 } from '../types/ValuationType.ts';
 import axios from 'axios';
 import { handleIncorrectParse } from './ErrorHandlers.ts';
+import toaster from '../shared/lib/react-toastify.ts';
 
 export interface ValuationService {
   GetLegoSetValuations: (legoSetID: number | string) => Promise<Valuation[]>;
@@ -35,6 +36,7 @@ const GetLegoSetValuations = async (
 const CreateValuation = async (data: ValuationData): Promise<boolean> => {
   try {
     await axios.post('/admin/sets-valuations/', data);
+    toaster.showToastSuccess('Valuation created');
     return Promise.resolve(true);
   } catch (e) {
     return Promise.reject(e);
@@ -48,7 +50,7 @@ const GetValuation = async (id: number | string): Promise<Valuation> => {
     return handleIncorrectParse(
       result.error,
       'GetValuation',
-      "Can't get valuation"
+      "Can't get valuations"
     );
 
   return result.data;
@@ -60,6 +62,7 @@ const UpdateValuation = async (
 ): Promise<boolean> => {
   try {
     await axios.put('/admin/sets-valuations/' + id, data);
+    toaster.showToastSuccess('Valuation updated');
     return Promise.resolve(true);
   } catch (e) {
     return Promise.reject(e);
@@ -68,7 +71,8 @@ const UpdateValuation = async (
 
 const DeleteValuation = async (id: number | string): Promise<boolean> => {
   try {
-    await axios.delete('/admin/sets' + id);
+    await axios.delete('/admin/sets-valuations/' + id);
+    toaster.showToastSuccess('Valuation deleted');
     return Promise.resolve(true);
   } catch (e) {
     return Promise.reject(e);
