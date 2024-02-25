@@ -17,7 +17,7 @@ export const LegoSetsPage = () => {
   const navigate = useNavigate();
 
   return (
-    <EntityFilter.Container model={model.entityFilterModel}>
+    <EntityFilter.Container>
       <div className="h-full w-full flex flex-col">
         <div className="w-full flex items-center justify-between mb-6">
           <div className="flex items-center space-x-6">
