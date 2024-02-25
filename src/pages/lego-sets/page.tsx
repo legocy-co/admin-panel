@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { useColumns } from './columns.tsx';
 import { Button } from '../../shared/ui/button.tsx';
 import { DeleteLegoSet } from '../../features/lego-set/delete';
+import { EntityFilter } from '../../shared/lib/entity-filter';
+import { LegoSetsFilter } from '../../features/lego-set/filter';
 
 export const LegoSetsPage = () => {
   useGate(model.gate);
@@ -15,25 +17,31 @@ export const LegoSetsPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-full w-full flex flex-col">
-      <div className="w-full flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-6">
-          <p className="text-xl">Lego sets</p>
-          <Button
-            className="text-xl max-w-12 h-9 rounded-sm"
-            onClick={() => navigate('/wiki/sets/add/')}
-          >
-            new
-          </Button>
+    <EntityFilter.Container model={model.entityFilterModel}>
+      <div className="h-full w-full flex flex-col">
+        <div className="w-full flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-6">
+            <p className="text-xl">Lego sets</p>
+            <Button
+              className="text-xl max-w-12 h-9 rounded-sm"
+              onClick={() => navigate('/wiki/sets/add/')}
+            >
+              new
+            </Button>
+          </div>
+          <ColumnControl model={model.columnControlModel} />
         </div>
-        <ColumnControl model={model.columnControlModel} />
+        <div className="flex justify-end pb-4">
+          <LegoSetsFilter.View model={model.legoSetsFilterModel} />
+        </div>
+        <LegoSetsFilter.ActiveFilters model={model.legoSetsFilterModel} />
+        <div className="flex-grow w-full overflow-y-auto">
+          <Content />
+        </div>
+        <Pagination.View model={model.paginationModel} />
+        <DeleteLegoSet />
       </div>
-      <div className="w-full overflow-y-auto flex justify-center">
-        <Content />
-      </div>
-      <Pagination.View model={model.paginationModel} />
-      <DeleteLegoSet />
-    </div>
+    </EntityFilter.Container>
   );
 };
 

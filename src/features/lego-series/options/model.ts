@@ -1,5 +1,5 @@
 import { createEffect, createStore } from 'effector';
-import { LegoSeriesType } from '../../../types/LegoSeriesType.ts';
+import { LegoSeries } from '../../../types/LegoSeriesType.ts';
 import { legoSeriesService } from '../../../services/LegoSeriesService.ts';
 
 type LegoSeriesOption = {
@@ -14,7 +14,7 @@ export const GetLegoSeriesFx = createEffect(() =>
 export const $legoSeriesOptions = createStore<LegoSeriesOption[]>([]);
 
 export function toLegoSeriesOptions(
-  legoSer: LegoSeriesType[]
+  legoSer: LegoSeries[]
 ): LegoSeriesOption[] {
   return legoSer.map((legoSer) => ({
     id: String(legoSer.id),

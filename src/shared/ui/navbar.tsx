@@ -8,6 +8,7 @@ import { persist } from 'effector-storage/local';
 
 import LogoutIcon from '../icons/logout.svg?react';
 import SetsIcon from '../icons/box.svg?react';
+import ChevronLeftIcon from '../icons/chevron-left.svg?react';
 
 type TNavigationItem = {
   to: string;
@@ -94,15 +95,15 @@ const NavigationItemsGroup = ({ name, items }: TNavigationItemsGroup) => {
     >
       <Collapsible.Trigger asChild>
         <button className="text-left p-2 flex items-center space-x-2 w-full">
-          {/*<IconChevronLeft*/}
-          {/*  className={clsx(*/}
-          {/*    'w-2 transition-all -translate-y-[1px] [&>path]:text-neutral-30',*/}
-          {/*    {*/}
-          {/*      'rotate-90': open,*/}
-          {/*      '-rotate-90': !open,*/}
-          {/*    }*/}
-          {/*  )}*/}
-          {/*/>*/}
+          <ChevronLeftIcon
+            className={clsx(
+              'w-5 h-5 fill-silver transition-all -translate-y-[px] [&>path]:text-neutral-30',
+              {
+                'rotate-90': open,
+                '-rotate-90': !open,
+              }
+            )}
+          />
           <span className="text-sm uppercase text-neutral-30">{name}</span>
         </button>
       </Collapsible.Trigger>
