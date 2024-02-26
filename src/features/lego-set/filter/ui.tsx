@@ -4,14 +4,15 @@ import React from 'react';
 import { Button } from '../../../shared/ui/button.tsx';
 import {
   NumberFieldAdapter,
+  SelectSearchAdapter,
   TextFieldAdapter,
 } from '../../../shared/ui/form-adapters.tsx';
-import { SelectSearch } from '../../../shared/ui/select-search.tsx';
 import { FormError } from '../../../shared/ui/form-error.tsx';
 import { LegoSetFilterModel } from './model.ts';
 import { EventPayload } from 'effector';
 import { BsChevronDown } from 'react-icons/bs';
 import clsx from 'clsx';
+import { lso } from '../../lego-series/options/index.ts';
 
 export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
   const { gate, disclosure, form } = model;
@@ -61,7 +62,7 @@ export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
               field={form.fields.max_pieces}
               labelText="Max pieces"
             />
-            {/*<LegoSeriesSearch model={model} />*/}
+            <LegoSeriesSearch model={model} />
             {/*TODO: legoSeries filter*/}
             <div className="flex gap-5 justify-center">
               <Button onClick={() => model.cancelTriggered()}>Cancel</Button>
@@ -75,10 +76,8 @@ export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
 };
 
 const LegoSeriesSearch = ({ model }: { model: LegoSetFilterModel }) => {
-  const [activeValue, options, value, errorText] = useUnit([
-    model.form.fields.series_ids.$value,
-    model.$series,
-    model.$seriesSearch,
+  const [legoSer, errorText] = useUnit([
+    lso.$legoSeriesOptions,
     model.form.fields.series_ids.$errorText,
   ]);
 
@@ -86,14 +85,14 @@ const LegoSeriesSearch = ({ model }: { model: LegoSetFilterModel }) => {
 
   return (
     <div className="relative flex justify-center">
-      <SelectSearch
-        labelText="Series"
-        onChange={(series) => model.seriesSelected(series)}
-        onInputChange={(search) => model.seriesSearchChanged(search)}
-        value={value}
-        isInvalid={hasError}
-        options={options}
-        activeValue={activeValue?.toString()}
+      <SelectSearchAdapter
+        clientSideSearch
+        field={model.form.fields.series_ids}
+        labelText="Lego series"
+        options={legoSer.map((ser) => ({
+          value: ser.id,
+          label: ser.name,
+        }))}
       />
       {hasError && <FormError>{errorText}</FormError>}
     </div>

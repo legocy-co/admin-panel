@@ -9,9 +9,7 @@ import {
 import { createGate } from 'effector-react';
 import { createDisclosure } from '../../../shared/lib/disclosure.ts';
 import { createForm } from 'effector-forms';
-import { SelectSearchOption } from '../../../shared/ui/select-search.tsx';
 import { stringifyParams } from '../../../services/utils.ts';
-import { spread } from 'patronum';
 import { persist, replaceState } from 'effector-storage/query';
 import {
   $legoSeriesOptions,
@@ -48,8 +46,6 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
   const filtersApplied = createEvent();
   const cancelTriggered = createEvent();
   const resetTriggered = createEvent();
-  const seriesSelected = createEvent<SelectSearchOption>();
-  const seriesSearchChanged = createEvent<string>();
 
   const resetExactFilterTriggered =
     createEvent<keyof StoreValue<typeof form.$values>>();
@@ -57,10 +53,6 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
   const $filtersSnapshot = domain.createStore<StoreValue<
     typeof form.$values
   > | null>(null);
-
-  const $seriesSearch = domain.createStore('');
-  const $series = domain.createStore<SelectSearchOption[]>([]);
-  const $seriesMap = domain.createStore<Record<string, string>>({});
 
   const $query = form.$values.map(
     ({ name, min_pieces, max_pieces, series_ids }) =>
@@ -75,20 +67,16 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
       )
   );
 
-  const $activeFilters = combine(
-    $filtersSnapshot,
-    $seriesMap,
-    (filters, map) => {
-      const allFilters = {
-        name: filters?.name,
-        min_pieces: filters?.min_pieces,
-        max_pieces: filters?.max_pieces,
-        series_ids: map[filters?.series_ids ?? ''],
-      };
+  const $activeFilters = combine($filtersSnapshot, (filters) => {
+    const allFilters = {
+      name: filters?.name,
+      min_pieces: filters?.min_pieces,
+      max_pieces: filters?.max_pieces,
+      series_ids: filters?.series_ids,
+    };
 
-      return Object.entries(allFilters).filter(([, value]) => Boolean(value));
-    }
-  );
+    return Object.entries(allFilters).filter(([, value]) => Boolean(value));
+  });
 
   sample({
     clock: form.formValidated,
@@ -116,11 +104,6 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
   sample({
     clock: [cancelTriggered, resetTriggered],
     target: disclosure.close,
-  });
-
-  sample({
-    clock: disclosure.close,
-    target: $series.reinit!,
   });
 
   sample({
@@ -153,28 +136,6 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
   });
 
   sample({
-    clock: seriesSearchChanged,
-    target: $seriesSearch,
-  });
-
-  sample({
-    clock: seriesSelected,
-    target: spread({
-      targets: {
-        value: form.fields.series_ids.$value,
-        label: $seriesSearch,
-      },
-    }),
-  });
-
-  sample({
-    clock: disclosure.open,
-    source: { map: $seriesMap, values: form.$values },
-    fn: ({ map, values }) => map[values.series_ids] ?? '',
-    target: $seriesSearch,
-  });
-
-  sample({
     clock: gate.close,
     target: [form.reset],
   });
@@ -197,10 +158,6 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
     filtersApplied,
     cancelTriggered,
     $query,
-    $series: $series,
-    $seriesSearch: $seriesSearch,
-    seriesSelected: seriesSelected,
-    seriesSearchChanged: seriesSearchChanged,
 
     disclosure,
 
