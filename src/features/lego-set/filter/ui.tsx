@@ -2,7 +2,10 @@ import * as Popover from '@radix-ui/react-popover';
 import { useGate, useUnit } from 'effector-react';
 import React from 'react';
 import { Button } from '../../../shared/ui/button.tsx';
-import { TextFieldAdapter } from '../../../shared/ui/form-adapters.tsx';
+import {
+  NumberFieldAdapter,
+  TextFieldAdapter,
+} from '../../../shared/ui/form-adapters.tsx';
 import { SelectSearch } from '../../../shared/ui/select-search.tsx';
 import { FormError } from '../../../shared/ui/form-error.tsx';
 import { LegoSetFilterModel } from './model.ts';
@@ -50,8 +53,16 @@ export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
               field={form.fields.name}
               labelText="Lego set name"
             />
-            {/*<LegoSetsSearch model={model} />*/}
-            {/*TODO: min_pieces & max_pieces filters*/}
+            <NumberFieldAdapter
+              field={form.fields.min_pieces}
+              labelText="Min pieces"
+            />
+            <NumberFieldAdapter
+              field={form.fields.max_pieces}
+              labelText="Max pieces"
+            />
+            {/*<LegoSeriesSearch model={model} />*/}
+            {/*TODO: legoSeries filter*/}
             <div className="flex gap-5 justify-center">
               <Button onClick={() => model.cancelTriggered()}>Cancel</Button>
               <Button type="submit">Apply</Button>
@@ -63,7 +74,7 @@ export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
   );
 };
 
-const LegoSetsSearch = ({ model }: { model: LegoSetFilterModel }) => {
+const LegoSeriesSearch = ({ model }: { model: LegoSetFilterModel }) => {
   const [activeValue, options, value, errorText] = useUnit([
     model.form.fields.series_ids.$value,
     model.$series,
@@ -100,12 +111,12 @@ export const ActiveFilters = ({ model }: { model: LegoSetFilterModel }) => {
   }
 
   return (
-    <div className="w-full flex items-center justify-between space-x-5 mb-5 border-b border-b-gray-600 border-solid py-2">
-      <div className="flex items-center gap-2">
+    <div className="w-full flex text-xs sm:text-sm items-center justify-between space-x-5 mb-5 border-b border-b-gray-600 border-solid py-2">
+      <div className="grid md:flex items-center gap-2">
         {activeFilters.map(([name, value]) => (
           <div
             key={name}
-            className="w-max flex rounded-full items-center space-x-2 px-2 py-1.5 bg-neutral-85"
+            className="w-max flex rounded-full items-center space-x-2 px-2 py-1.5 bg-slate"
           >
             <button
               type="button"
@@ -114,12 +125,12 @@ export const ActiveFilters = ({ model }: { model: LegoSetFilterModel }) => {
                   name as EventPayload<typeof resetExactFilterTriggered>
                 )
               }
-              className="rounded-full p-1 bg-neutral-30 hover:bg-neutral-15 transition-colors"
+              className="rounded-full py-1 px-2 bg-slate hover:brightness-90 active:brightness-80 transition-all"
             >
               x
             </button>
             <div className="text-neutral-30 text-sm flex space-x-1">
-              <span className="capitalize">{name}</span>
+              <span className="capitalize">{name.replace('_', ' ')}</span>
               <span>|</span>
               <span className="!text-white max-w-xs overflow-hidden text-ellipsis whitespace-nowrap">
                 {value}
@@ -132,7 +143,7 @@ export const ActiveFilters = ({ model }: { model: LegoSetFilterModel }) => {
       <button
         onClick={() => resetTriggered()}
         type="button"
-        className="btn btn-sm btn-ghost"
+        className="rounded text-sm p-2 text-black bg-ghost hover:opacity-90 active:opacity-80 transition-opacity"
       >
         Clear filters
       </button>

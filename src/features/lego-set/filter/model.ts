@@ -1,5 +1,4 @@
 import {
-  attach,
   combine,
   createDomain,
   createEvent,
@@ -12,10 +11,13 @@ import { createDisclosure } from '../../../shared/lib/disclosure.ts';
 import { createForm } from 'effector-forms';
 import { SelectSearchOption } from '../../../shared/ui/select-search.tsx';
 import { stringifyParams } from '../../../services/utils.ts';
-import { legoSetService } from '../../../services/LegoSetService.ts';
-import { debounce, spread } from 'patronum';
-import { legoSeriesService } from '../../../services/LegoSeriesService.ts';
+import { spread } from 'patronum';
 import { persist, replaceState } from 'effector-storage/query';
+import {
+  $legoSeriesOptions,
+  GetLegoSeriesFx,
+  toLegoSeriesOptions,
+} from '../../lego-series/options/model.ts';
 
 export type LegoSetFilterModel = ReturnType<typeof legoSetFilterFactory>;
 
@@ -32,10 +34,10 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
         init: '',
       },
       min_pieces: {
-        init: '',
+        init: null as unknown as number,
       },
       max_pieces: {
-        init: '',
+        init: null as unknown as number,
       },
       series_ids: {
         init: '',
@@ -88,31 +90,6 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
     }
   );
 
-  const fetchSeriesListFx = attach({
-    source: $seriesSearch,
-    effect: (search) =>
-      legoSetService.GetLegoSetsPage(
-        stringifyParams(
-          {
-            name__ilike: search,
-            limit: 20,
-          },
-          false
-        )
-      ),
-  });
-
-  const fetchSeriesFx = attach({
-    source: form.$values,
-    effect: (values) => {
-      if (values.series_ids) {
-        return legoSeriesService.GetLegoSeries(values.series_ids);
-      }
-
-      return Promise.resolve(null);
-    },
-  });
-
   sample({
     clock: form.formValidated,
     source: form.$values,
@@ -127,7 +104,13 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
 
   sample({
     clock: gate.open,
-    target: fetchSeriesFx,
+    target: GetLegoSeriesFx,
+  });
+
+  sample({
+    clock: GetLegoSeriesFx.doneData,
+    fn: toLegoSeriesOptions,
+    target: $legoSeriesOptions,
   });
 
   sample({
@@ -175,39 +158,6 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
   });
 
   sample({
-    clock: debounce({
-      source: seriesSearchChanged,
-      timeout: 500,
-    }),
-    target: fetchSeriesListFx,
-  });
-
-  sample({
-    clock: fetchSeriesListFx.doneData,
-    source: $seriesMap,
-    fn: (map, response) => ({
-      series: response.data.map(
-        (series): SelectSearchOption => ({
-          label: series.name,
-          value: series.id.toString(),
-        })
-      ),
-      map: {
-        ...map,
-        ...Object.fromEntries(
-          response.data.map((series) => [series.id, series.name])
-        ),
-      },
-    }),
-    target: spread({
-      targets: {
-        partners: $series,
-        map: $seriesMap,
-      },
-    }),
-  });
-
-  sample({
     clock: seriesSelected,
     target: spread({
       targets: {
@@ -222,29 +172,6 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
     source: { map: $seriesMap, values: form.$values },
     fn: ({ map, values }) => map[values.series_ids] ?? '',
     target: $seriesSearch,
-  });
-
-  sample({
-    clock: fetchSeriesFx.doneData,
-    source: $seriesMap,
-    fn: (map, response) =>
-      response
-        ? {
-            ...map,
-            [response.id]: response.name,
-          }
-        : map,
-    target: $seriesMap,
-  });
-
-  sample({
-    clock: fetchSeriesFx.doneData,
-    source: $series,
-    fn: (partners, response) =>
-      response
-        ? [{ label: response.name, value: response.id.toString() }]
-        : partners,
-    target: $series,
   });
 
   sample({
