@@ -64,7 +64,11 @@ const GetLegoSetsPageFx = attach({
   },
   effect: ({ page, pageSize, query }) =>
     GetLegoSetsPageBaseFx(
-      stringifyParams({ limit: pageSize, offset: page * pageSize }, true, query.split('%2C').join('&'))
+      stringifyParams(
+        { limit: pageSize, offset: page * pageSize },
+        true,
+        query.split('%2C').join('&series_id__in=')
+      )
     ),
 });
 
