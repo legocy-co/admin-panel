@@ -109,7 +109,7 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
         name: {
           value: filters?.name,
           show: !!filters?.name,
-          label: 'Lego set',
+          label: 'Name',
         },
         min_pieces: {
           value: filters?.min_pieces,
@@ -200,6 +200,18 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
   persist({
     store: form.fields.series_ids.$value,
     key: 'series_ids',
+    method: replaceState,
+  });
+
+  persist({
+    store: form.fields.min_pieces.$value,
+    key: 'min_pieces',
+    method: replaceState,
+  });
+
+  persist({
+    store: form.fields.max_pieces.$value,
+    key: 'max_pieces',
     method: replaceState,
   });
 
