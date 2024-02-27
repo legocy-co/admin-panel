@@ -78,11 +78,16 @@ export const SelectSearch = ({
             className="absolute bg-white rounded overflow-hidden max-h-60 overflow-y-auto w-[343px] shadow-md border-black border-solid border"
             style={coords}
           >
-            {isEmptyOptions && (
-              <div className="w-full flex justify-center py-4">
-                <p>No results</p>
-              </div>
-            )}
+            {isEmptyOptions &&
+              (value ? (
+                <div className="w-full flex justify-center py-4">
+                  <p>No results</p>
+                </div>
+              ) : (
+                <div className="w-full flex justify-center py-4">
+                  <p>Enter something</p>
+                </div>
+              ))}
 
             {!isEmptyOptions &&
               renderOptions.map((option) => (
