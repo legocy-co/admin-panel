@@ -8,7 +8,6 @@ import { Pagination } from '../../shared/lib/pagination';
 import { stringifyParams } from '../../services/utils.ts';
 import { deleted } from '../../features/lego-set/delete/model.ts';
 import { LegoSetsFilter } from '../../features/lego-set/filter';
-import { EntityFilter } from '../../shared/lib/entity-filter';
 
 export const gate = createGate();
 
@@ -42,11 +41,6 @@ export const legoSetsFilterModel = LegoSetsFilter.factory({
 export const legoSetToggled = domain.createEvent<number>();
 
 export const toggleAll = domain.createEvent();
-
-export const entityFilterModel = EntityFilter.factory({
-  $appliableEntities: $selectedLegoSets,
-  setupListener: gate.open,
-});
 
 export const paginationModel = Pagination.factory({
   entities: $sets,
