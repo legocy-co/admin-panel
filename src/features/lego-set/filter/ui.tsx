@@ -89,28 +89,33 @@ const LegoSeriesSearch = ({
   ]);
 
   return (
-    <div className="relative flex flex-col justify-center">
-      <SelectSearch
-        clientSideSearch
-        labelText={label}
-        onChange={(option) => model.selected(option)}
-        onInputChange={(search) => model.searchChanged(search)}
-        value={value}
-        options={options}
-      />
-
-      <div className="gap-2 flex flex-wrap">
+    <div className="border-black border border-solid dark:bg-dark dark:border-none rounded-xl pt-2 pl-2 mb-5 flex flex-col justify-end">
+      <div className="flex flex-wrap gap-1 top-0">
         {selectedWithNames.map((selected) => (
           <div
             key={selected.id}
             aria-hidden
             onClick={() => model.removed(selected.id)}
-            className="bg-dark w-max rounded-full px-1.5 mb-5 py-0.5 cursor-pointer hover:brightness-90 active:brightness-80 transition-colors"
+            className="bg-slate text-white w-max rounded-full px-1.5 mb-1 py-0.5 cursor-pointer hover:brightness-90 active:brightness-80 transition-colors"
           >
             <span className="text-sm">{selected.name}</span>
           </div>
         ))}
       </div>
+      <SelectSearch
+        clientSideSearch
+        labelText=""
+        onChange={(option) => {
+          model.selected(option);
+        }}
+        onInputChange={(search) => {
+          model.searchChanged(search);
+        }}
+        value={value}
+        options={options}
+        placeholder={label}
+        className="border-none max-w-80 w-80"
+      />
     </div>
   );
 };

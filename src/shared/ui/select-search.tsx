@@ -21,6 +21,7 @@ type Props = {
   isInvalid?: boolean;
   className?: string;
   clientSideSearch?: boolean;
+  placeholder?: string;
 };
 
 export const SelectSearch = ({
@@ -31,6 +32,8 @@ export const SelectSearch = ({
   options,
   clientSideSearch,
   isInvalid,
+  className,
+  placeholder,
   ...props
 }: Props) => {
   const filteredOptions = options.filter((option) =>
@@ -66,9 +69,11 @@ export const SelectSearch = ({
     <div ref={ref} className="w-full relative flex flex-col">
       <Input
         onClick={handleInputClick}
+        className={className}
         onChange={(ev) => onInputChange(ev.currentTarget.value)}
         value={value}
         isInvalid={isInvalid}
+        placeholder={placeholder}
         {...props}
       />
       {isOpened && (
