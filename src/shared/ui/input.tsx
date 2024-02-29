@@ -11,10 +11,20 @@ export type InputProps = NativeInputProps & {
   isInvalid?: boolean;
   isDisabled?: boolean;
   multiple?: boolean;
+  className?: string;
+  placeholder?: string;
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { labelText, isInvalid, type = 'text', isDisabled, ...rest } = props;
+  const {
+    labelText,
+    isInvalid,
+    type = 'text',
+    isDisabled,
+    className,
+    placeholder,
+    ...rest
+  } = props;
 
   const isPassword = type === 'password';
   const isNumber = type === 'number';
@@ -33,9 +43,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           className={clsx(
             'block w-[343px] h-[44px] dark:bg-dark border border-solid border-slate rounded-xl !dark:text-charcoal indent-3 pr-10 outline-0 mb-3.5',
             { 'bg-rose dark:bg-rose dark:text-charcoal': isInvalid },
-            { 'no-scroll': isNumber }
+            { 'no-scroll': isNumber },
+            className
           )}
           type={parsedType}
+          placeholder={placeholder}
           {...rest}
         />
         {isPassword && (

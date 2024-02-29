@@ -172,6 +172,11 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
   });
 
   sample({
+    clock: filtersApplied,
+    target: form.reset,
+  });
+
+  sample({
     clock: resetTriggered,
     target: [form.reset, filtersApplied, $filtersSnapshot.reinit!],
   });
@@ -349,12 +354,15 @@ function searchFactory<Done, EntityDone>({
       label: option.label,
       value: selected.concat(option.value).join(','),
     }),
-    target: spread({
-      targets: {
-        value: $selected,
-        label: $search,
-      },
-    }),
+    target: [
+      spread({
+        targets: {
+          value: $selected,
+          label: $search,
+        },
+      }),
+      $search.reinit!,
+    ],
   });
 
   sample({
