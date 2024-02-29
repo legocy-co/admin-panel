@@ -6,6 +6,7 @@ import { addDefaultSrc } from '../../../../services/utils.ts';
 import GalleryModal from '../../../../components/GalleryModal';
 import { Button } from '../../../../shared/ui/button.tsx';
 import { legoSetService } from '../../../../services/LegoSetService.ts';
+import toaster from '../../../../shared/lib/react-toastify.ts';
 
 export const LegoSetDetailInfoPage = () => {
   const params = useParams<'id'>();
@@ -19,6 +20,11 @@ export const LegoSetDetailInfoPage = () => {
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.currentTarget.files?.[0];
     if (file) {
+      if (file.size > 20000000) {
+        toaster.showToastError('Maximum file size is 20MB');
+        return;
+      }
+
       const data = new FormData();
       data.append('file', file);
       await legoSetService.UploadImage(data, legoSet.id);
@@ -46,7 +52,7 @@ export const LegoSetDetailInfoPage = () => {
         ) : (
           <div>
             <input
-              accept=".jpg, .jpeg, .png"
+              accept=".jpg, .jpeg, .png, .heic"
               className="hidden"
               type="file"
               name="input_image"
