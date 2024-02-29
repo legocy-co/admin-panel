@@ -20,6 +20,7 @@ import LegoSetsPage from '../pages/lego-sets';
 import LegoSetDetailPage from '../pages/lego-sets/detail';
 import AddLegoSetPage from '../pages/lego-sets/add';
 import UpdateLegoSetPage from '../pages/lego-sets/update';
+import MarketItemsPage from '../pages/market-items';
 
 const AppRouter = () => {
   const navigate = useNavigate();
@@ -50,11 +51,16 @@ const AppRouter = () => {
         }
       >
         <Route index element={<Navigate to="wiki/sets" />} />
+
         <Route path="wiki/sets" element={<Outlet />}>
           <Route index element={<LegoSetsPage />} />
           <Route path="add" element={<AddLegoSetPage />} />
           <Route path=":id" element={<LegoSetDetailPage />} />
           <Route path="update/:id" element={<UpdateLegoSetPage />} />
+        </Route>
+
+        <Route path="market-items" element={<Outlet />}>
+          <Route index element={<MarketItemsPage />} />
         </Route>
       </Route>
     </Routes>

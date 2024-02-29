@@ -8,6 +8,7 @@ import { persist } from 'effector-storage/local';
 
 import LogoutIcon from '../icons/logout.svg?react';
 import SetsIcon from '../icons/box.svg?react';
+import MarketItemsIcon from '../icons/cart.svg?react';
 import ChevronLeftIcon from '../icons/chevron-left.svg?react';
 
 type TNavigationItem = {
@@ -29,6 +30,16 @@ const navigationItemsGroups: TNavigationItemsGroup[] = [
         to: '/wiki/sets',
         Icon: SetsIcon,
         name: 'Sets',
+      },
+    ],
+  },
+  {
+    name: 'market items',
+    items: [
+      {
+        to: '/market-items/',
+        Icon: MarketItemsIcon,
+        name: 'Market items',
       },
     ],
   },
