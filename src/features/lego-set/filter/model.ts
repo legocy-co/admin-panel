@@ -14,7 +14,7 @@ import { createGate } from 'effector-react';
 import { createDisclosure } from '../../../shared/lib/disclosure.ts';
 import { createForm } from 'effector-forms';
 import { stringifyParams } from '../../../services/utils.ts';
-import { persist, replaceState } from 'effector-storage/query';
+import { persist } from 'effector-storage/local';
 import { legoSeriesService } from '../../../services/LegoSeriesService.ts';
 import { SelectSearchOption } from '../../../shared/ui/select-search.tsx';
 import { debounce, spread } from 'patronum';
@@ -143,12 +143,6 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
 
   sample({
     clock: gate.open,
-    source: form.$values,
-    target: $filtersSnapshot,
-  });
-
-  sample({
-    clock: gate.open,
     target: [seriesListSearch.fetchEntitiesFx],
   });
 
@@ -165,14 +159,7 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
   });
 
   sample({
-    clock: cancelTriggered,
-    source: $filtersSnapshot,
-    filter: (is) => !is,
-    target: form.reset,
-  });
-
-  sample({
-    clock: filtersApplied,
+    clock: [cancelTriggered, filtersApplied],
     target: form.reset,
   });
 
@@ -191,33 +178,9 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
     target: [form.setForm, filtersApplied, $filtersSnapshot],
   });
 
-  sample({
-    clock: gate.close,
-    target: [form.reset],
-  });
-
   persist({
-    store: form.fields.name.$value,
-    key: 'name',
-    method: replaceState,
-  });
-
-  persist({
-    store: form.fields.series_ids.$value,
-    key: 'series_ids',
-    method: replaceState,
-  });
-
-  persist({
-    store: form.fields.min_pieces.$value,
-    key: 'min_pieces',
-    method: replaceState,
-  });
-
-  persist({
-    store: form.fields.max_pieces.$value,
-    key: 'max_pieces',
-    method: replaceState,
+    store: $filtersSnapshot,
+    key: 'sets_filters',
   });
 
   return {
