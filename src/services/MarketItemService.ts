@@ -6,8 +6,9 @@ import {
 } from '../types/MarketItemType.ts';
 
 import toaster from '../shared/lib/react-toastify.ts';
-import { handleIncorrectParse } from './ErrorHandlers.ts';
+import { handleIncorrectParse, handleSetError } from './ErrorHandlers.ts';
 import axios from 'axios';
+import { mif } from '../features/market-item/index.tsx';
 
 interface MarketItemService {
   CreateMarketItem: (marketItem: MarketItemData) => Promise<boolean>;
@@ -29,7 +30,7 @@ const CreateMarketItem = async (
 
     return Promise.resolve(true);
   } catch (e) {
-    return Promise.reject(e);
+    return handleSetError(e, 'MarketItem', mif.form);
   }
 };
 

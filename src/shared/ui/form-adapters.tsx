@@ -2,10 +2,17 @@ import { Field, useField } from 'effector-forms';
 import { Input, InputProps } from './input';
 import React, { useState } from 'react';
 import { SelectSearch, SelectSearchOption } from './select-search.tsx';
+import { Textarea } from './textarea.tsx';
+import clsx from 'clsx';
 
 export type FormAdapterProps<T> = {
   field: Field<T>;
 } & Omit<InputProps, 'isInvalid'>;
+
+export type SelectFieldOption = {
+  value: string;
+  label: string;
+};
 
 export const TextFieldAdapter = ({
   field,
@@ -83,6 +90,57 @@ export const SelectSearchAdapter = ({
         x
       </div>
     </div>
+  );
+};
+
+export const TextareaFieldAdapter = ({
+  field,
+  className,
+  labelText,
+}: FormAdapterProps<string>) => {
+  const { value, onChange } = useField(field);
+
+  return (
+    <Textarea
+      labelText={labelText}
+      className={className}
+      value={value}
+      onChange={(e) => onChange(e.currentTarget.value)}
+    />
+  );
+};
+
+export const SelectFieldAdapter = ({
+  field,
+  defaultOptionValue,
+  options,
+  disabled,
+}: {
+  options: SelectFieldOption[];
+  defaultOptionValue: string;
+  field: Field<any>;
+  disabled?: boolean;
+}) => {
+  const { value, onChange, hasError } = useField(field);
+
+  const isInvalid = hasError();
+
+  return (
+    <select
+      value={value ?? defaultOptionValue}
+      disabled={disabled}
+      onChange={(ev) => onChange(ev.currentTarget.value)}
+      className={clsx(
+        'block w-[343px] h-[44px] bg-dark border border-solid border-slate rounded-xl indent-3 pr-10 outline-0 mb-3.5',
+        { 'bg-rose text-charcoal': isInvalid }
+      )}
+    >
+      {options.map(({ value, label }, i) => (
+        <option key={value + i} value={value} className="">
+          {label}
+        </option>
+      ))}
+    </select>
   );
 };
 

@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { ZodError } from 'zod';
 import toaster from '../shared/lib/react-toastify.ts';
 import { LegoSetForm } from '../types/LegoSetType.ts';
+import { MarketItemForm } from '../types/MarketItemType.ts';
 
 const handleIncorrectParse = (
   e: ZodError,
@@ -41,7 +42,7 @@ const handleUserError = (
 const handleSetError = (
   e: unknown,
   consolePrefix: string,
-  form: LegoSetForm
+  form: LegoSetForm | MarketItemForm
 ): Promise<never> => {
   if (axios.isAxiosError(e)) {
     const err = e as AxiosError;

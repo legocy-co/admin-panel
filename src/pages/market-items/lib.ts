@@ -1,5 +1,5 @@
 import { PaginationData } from '../../types/pagination.ts';
-import { MarketItem, setStates } from '../../types/MarketItemType.ts';
+import { MarketItem, setStates, statuses } from '../../types/MarketItemType.ts';
 
 export type MarketItemRow = {
   id: number;
@@ -53,9 +53,7 @@ export function toMarketItemRows(
     location: marketItem.location,
     lego_set_name: marketItem.lego_set.name,
     seller_username: marketItem.seller.username,
-    status:
-      marketItem.status![0] +
-      marketItem.status!.split('_').join(' ').toLowerCase().slice(1),
+    status: statuses[marketItem.status as keyof typeof statuses],
     set_state: setStates[marketItem.set_state as keyof typeof setStates],
   }));
 }
