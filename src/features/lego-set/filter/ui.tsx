@@ -4,6 +4,7 @@ import React from 'react';
 import { Button } from '../../../shared/ui/button.tsx';
 import {
   NumberFieldAdapter,
+  SelectSearchAdapter,
   TextFieldAdapter,
 } from '../../../shared/ui/form-adapters.tsx';
 import { LegoSetFilterModel, SearchModel } from './model.ts';
@@ -11,12 +12,14 @@ import { EventPayload } from 'effector';
 import { BsChevronDown } from 'react-icons/bs';
 import clsx from 'clsx';
 import { SelectSearch } from '../../../shared/ui/select-search.tsx';
+import { lso } from '../options/index.ts';
 
 export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
   const { gate, disclosure, form } = model;
   useGate(gate);
 
   const [isOpen] = useUnit([disclosure.$isOpen]);
+  const legoSets = useUnit(lso.$legoSetOptions);
 
   const onSubmit = (ev: React.FormEvent) => {
     ev.preventDefault();
@@ -47,7 +50,10 @@ export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
       <Popover.Portal>
         <Popover.Content className="rounded w-96 text-white p-4 mt-2 bg-slate">
           <p className="text-xl">Filters</p>
-          <form onSubmit={onSubmit} className="flex flex-col mt-5">
+          <form
+            onSubmit={onSubmit}
+            className="flex h-96 overflow-y-auto overflow-x-hidden flex-col mt-5"
+          >
             <TextFieldAdapter
               field={form.fields.name}
               labelText="Lego set name"
@@ -63,6 +69,15 @@ export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
             <LegoSeriesSearch
               label="Lego series"
               model={model.seriesListSearch}
+            />
+            <SelectSearchAdapter
+              clientSideSearch
+              field={model.form.fields.set_number}
+              labelText="Lego set"
+              options={legoSets.map((legoSet) => ({
+                value: String(legoSet.number),
+                label: `${legoSet.number} - ${legoSet.name}`,
+              }))}
             />
             <div className="flex gap-5 justify-center">
               <Button onClick={() => model.cancelTriggered()}>Cancel</Button>
