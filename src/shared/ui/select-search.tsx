@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import * as Portal from '@radix-ui/react-portal';
 import { useOutsideClick } from 'rooks';
-
 import { Input } from './input';
 import clsx from 'clsx';
 
@@ -41,7 +40,12 @@ export const SelectSearch = ({
   );
 
   const ref = useRef<HTMLDivElement>(null);
-  const [coords, setCoords] = useState({ left: 0, top: 0, right: 0 });
+  const [coords, setCoords] = useState({
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+  });
 
   const [isOpened, setIsOpened] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -50,9 +54,9 @@ export const SelectSearch = ({
     if (!ref.current) return;
 
     const { x, y } = ref.current.getBoundingClientRect();
-
     const right = window.innerWidth - x - ref.current.offsetWidth;
-    setCoords({ left: x, top: y + 60, right });
+    setCoords({ left: x, top: y + 60, right, bottom: 0 });
+
     setIsOpened(true);
   };
 

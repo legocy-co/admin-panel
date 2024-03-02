@@ -16,7 +16,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       <TextareaAutosize
         ref={ref}
         className={clsx(
-          'border bg-dark border-solid border-slate rounded-xl text-charcoal pl-3 pr-10 outline-0 mb-3.5 py-5',
+          'border bg-dark border-solid border-slate rounded-xl text-white pl-3 pr-10 outline-0 mb-3.5 py-5',
           'focus:outline-none focus:border-primary-default',
           'placeholder:opacity-95',
           'floating-input-base',

@@ -113,17 +113,18 @@ export const MarketItemForm = () => {
       <div className="relative flex justify-center">
         {!eachValid && (
           <FormError>
-            {fields.country?.errorText() ||
-              fields.city?.errorText() ||
-              fields.name?.errorText() ||
-              fields.price?.errorText() ||
-              fields.set_state?.errorText() ||
-              fields.seller_id?.errorText() ||
-              fields.status?.errorText()}
+            {fields.name.errorText() ||
+              fields.country.errorText() ||
+              fields.city.errorText() ||
+              fields.name.errorText() ||
+              fields.price.errorText() ||
+              fields.set_state.errorText() ||
+              fields.seller_id.errorText() ||
+              fields.status.errorText()}
           </FormError>
         )}
-        <Button type="submit" className="mt-14 w-64">
-          {params.id ? 'Edit lego set' : 'Add lego set'}
+        <Button type="submit" className="my-14 w-64">
+          {`${params.id ? 'Edit' : 'Add'} market item`}
         </Button>
       </div>
     </form>

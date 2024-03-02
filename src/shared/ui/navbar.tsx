@@ -37,7 +37,7 @@ const navigationItemsGroups: TNavigationItemsGroup[] = [
     name: 'market items',
     items: [
       {
-        to: '/market-items/',
+        to: '/market-items',
         Icon: MarketItemsIcon,
         name: 'Market items',
       },
