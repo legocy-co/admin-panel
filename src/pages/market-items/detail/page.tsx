@@ -12,11 +12,11 @@ export const MarketItemDetailPage = () => {
 
   useGate(model.gate, { id: params.id ?? null, navigate });
 
-  const marketItem = useUnit(model.$legoSetDetail);
+  const marketItem = useUnit(model.$marketItemDetail);
   const [showGallery, setShowGallery] = useState<number>(-1);
 
   return (
-    <>
+    <div className="w-full h-screen flex flex-col items-center">
       <div className="mt-8 mb-9 whitespace-nowrap flex flex-col gap-7">
         <img
           className="w-[300px] md:w-[595px] h-[200px] md:h-[470px] object-cover object-center rounded-md bg-silver cursor-pointer transition-opacity hover:opacity-90 active:opacity-80"
@@ -26,29 +26,47 @@ export const MarketItemDetailPage = () => {
           alt=""
         />
         <div className="w-[250px] md:w-[577px] align-top inline-block text-xl">
-          <p className="text-3xl font-semibold mb-10">{marketItem.name}</p>
-          <div className="flex flex-col justify-between h-24 mb-4">
+          <p className="text-3xl font-semibold mb-10 cursor-pointer hover:opacity-90 active:opacity-80">
+            {marketItem.lego_set}
+          </p>
+          <div className="flex flex-col justify-between h-48 mb-4">
             <p>
-              Pieces:{' '}
+              Price:{' '}
               <span className="text-light dark:text-yellow-100">
-                {marketItem.pieces}
+                {marketItem.price}
               </span>
             </p>
             <p>
-              Series:{' '}
+              Seller:{' '}
               <span className="text-light dark:text-yellow-100">
-                {marketItem.series}
+                {marketItem.seller}
+              </span>
+            </p>
+            <p>
+              State:{' '}
+              <span className="text-light dark:text-yellow-100">
+                {marketItem.set_state}
+              </span>
+            </p>
+            <p>
+              Status:{' '}
+              <span className="text-light dark:text-yellow-100">
+                {marketItem.status}
               </span>
             </p>
           </div>
           <p className="mb-9">
-            Set Number:{' '}
+            Location:{' '}
             <span className="text-light dark:text-yellow-100">
-              {marketItem.number}
+              {marketItem.location}
             </span>
           </p>
+          <div className="bg-dark border border-solid border-black rounded-xl whitespace-normal py-3.5 pr-5 pl-6 mb-5 sm:mb-28">
+            <p>Set description: {marketItem.description}</p>
+          </div>
           <Button
-            onClick={() => navigate('/wiki/sets/update/' + marketItem.id)}
+            className="mb-8"
+            onClick={() => navigate('/market-items/update/' + marketItem.id)}
           >
             Edit set
           </Button>
@@ -61,6 +79,6 @@ export const MarketItemDetailPage = () => {
           onClose={() => setShowGallery(-1)}
         />
       )}
-    </>
+    </div>
   );
 };

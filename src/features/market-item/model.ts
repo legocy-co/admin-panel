@@ -4,7 +4,7 @@ import { createGate } from 'effector-react';
 import { NavigateFunction } from 'react-router-dom';
 import { z } from 'zod';
 import { MarketItem, setStates, statuses } from '../../types/MarketItemType.ts';
-import { attach, createDomain, sample, split } from 'effector';
+import { attach, createDomain, EventPayload, sample, split } from 'effector';
 import { marketItemService } from '../../services/MarketItemService.ts';
 import {
   $legoSetOptions,
@@ -106,13 +106,13 @@ const $marketItemId = gate.state.map(({ id }) => id);
 
 const $isEditing = $marketItemId.map((id) => id !== null);
 
-// const fetchMarketItemFx = attach({
-//   source: $marketItemId,
-//   effect: (id) => {
-//     if (!id) throw new Error('ID not provided');
-//     return marketItemService.GetMarketItem(id);
-//   },
-// });
+const fetchMarketItemFx = attach({
+  source: $marketItemId,
+  effect: (id) => {
+    if (!id) throw new Error('ID not provided');
+    return marketItemService.GetMarketItem(id);
+  },
+});
 
 const addMarketItemFx = attach({
   source: form.$values,
@@ -128,36 +128,41 @@ const addMarketItemFx = attach({
     }),
 });
 
-// const updateMarketItemFx = attach({
-//   source: {
-//     id: $marketItemId,
-//     data: form.$values,
-//   },
-//   effect: ({ id, data }) =>
-//     legoSetService.UpdateLegoSet(
-//       {
-//         n_pieces: data.n_pieces,
-//         name: data.name,
-//         number: data.number,
-//         series_id: Number(data.series_id),
-//       },
-//       id!
-//     ),
-// });
+const updateMarketItemFx = attach({
+  source: {
+    id: $marketItemId,
+    data: form.$values,
+  },
+  effect: ({ id, data }) =>
+    marketItemService.UpdateMarketItem(id!, {
+      description: data.description,
+      lego_set_id: Number(data.name),
+      location: `${data.city}, ${data.country}`,
+      price: data.price,
+      seller_id: Number(data.seller_id),
+      set_state: data.set_state,
+      status: data.status,
+    }),
+});
 
 const listRedirectFx = attach({
   source: gate.state,
   effect: ({ navigateFn }) => navigateFn('/market-items/'),
 });
 
-// function toForm(values: LegoSet): EventPayload<typeof form.setForm> {
-//   return {
-//     n_pieces: values.n_pieces,
-//     name: values.name,
-//     number: values.number,
-//     series_id: String(values.series.id),
-//   };
-// }
+function toForm(values: MarketItem): EventPayload<typeof form.setForm> {
+  const locationSplit = values.location.split(', ');
+  return {
+    description: values.description,
+    name: String(values.lego_set_id),
+    city: locationSplit[0],
+    country: locationSplit[1],
+    price: values.price,
+    seller_id: String(values.seller.id),
+    set_state: values.set_state,
+    status: values.status,
+  };
+}
 
 sample({
   clock: gate.open,
@@ -176,34 +181,34 @@ sample({
   target: $userOptions,
 });
 
-// sample({
-//   clock: $legoSeriesOptions,
-//   filter: $isEditing,
-//   target: fetchMarketItemFx,
-// });
+sample({
+  clock: $legoSetOptions,
+  filter: $isEditing,
+  target: fetchMarketItemFx,
+});
 
-// sample({
-//   clock: fetchMarketItemFx.doneData,
-//   target: setForm,
-// });
-//
-// sample({
-//   clock: setForm,
-//   fn: toForm,
-//   target: form.setForm,
-// });
+sample({
+  clock: fetchMarketItemFx.doneData,
+  target: setForm,
+});
+
+sample({
+  clock: setForm,
+  fn: toForm,
+  target: form.setForm,
+});
 
 split({
   source: form.formValidated,
   match: $isEditing.map(String),
   cases: {
-    // true: updateLegoSetFx,
+    true: updateMarketItemFx,
     false: addMarketItemFx,
   },
 });
 
 sample({
-  clock: [addMarketItemFx.done /*, updateLegoSetFx.done*/],
+  clock: [addMarketItemFx.done, updateMarketItemFx.done],
   target: listRedirectFx,
 });
 

@@ -1,17 +1,24 @@
-import { LegoSetImage } from '../../../types/LegoSetImageType.ts';
 import { createGate } from 'effector-react';
 import { NavigateFunction } from 'react-router-dom';
 import { attach, createEvent, createStore, sample } from 'effector';
 import { marketItemService } from '../../../services/MarketItemService.ts';
-import { MarketItem } from '../../../types/MarketItemType.ts';
+import {
+  MarketItem,
+  setStates,
+  statuses,
+} from '../../../types/MarketItemType.ts';
+import { MarketItemImage } from '../../../types/MarketItemImageType.ts';
 
 type MarketItemDetail = {
   id: number;
-  images?: LegoSetImage[];
-  pieces: number;
-  name: string;
-  number: number;
-  series: string;
+  seller: string;
+  status: string;
+  description: string;
+  lego_set: string;
+  location: string;
+  price: number;
+  set_state: string;
+  images: MarketItemImage[];
 };
 
 export const gate = createGate<{
@@ -19,13 +26,16 @@ export const gate = createGate<{
   navigate: NavigateFunction;
 }>();
 
-export const $legoSetDetail = createStore<MarketItemDetail>({
+export const $marketItemDetail = createStore<MarketItemDetail>({
   id: 0,
+  description: '',
+  lego_set: '',
+  location: '',
+  price: 0,
+  seller: '',
+  set_state: '',
+  status: '',
   images: [],
-  name: '',
-  number: 0,
-  pieces: 0,
-  series: '',
 });
 
 export const imagesChanged = createEvent();
@@ -41,11 +51,14 @@ const GetMarketItemFx = attach({
 function toDetail(marketItem: MarketItem): MarketItemDetail {
   return {
     id: marketItem.id,
-    name: '',
-    number: 0,
-    pieces: 0,
-    series: '',
-    //TODO: toDetail & MarketItemDetail
+    description: marketItem.description,
+    lego_set: marketItem.lego_set.name,
+    location: marketItem.location,
+    price: marketItem.price,
+    seller: marketItem.seller.username,
+    set_state: setStates[marketItem.set_state],
+    status: statuses[marketItem.status],
+    images: marketItem.images,
   };
 }
 
@@ -57,5 +70,5 @@ sample({
 sample({
   clock: GetMarketItemFx.doneData,
   fn: toDetail,
-  target: $legoSetDetail,
+  target: $marketItemDetail,
 });
