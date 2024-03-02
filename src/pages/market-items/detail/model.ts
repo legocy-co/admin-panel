@@ -16,7 +16,7 @@ type MarketItemDetail = {
   description: string;
   lego_set: string;
   location: string;
-  price: number;
+  price: string;
   set_state: string;
   images: MarketItemImage[];
 };
@@ -31,7 +31,7 @@ export const $marketItemDetail = createStore<MarketItemDetail>({
   description: '',
   lego_set: '',
   location: '',
-  price: 0,
+  price: '',
   seller: '',
   set_state: '',
   status: '',
@@ -54,7 +54,7 @@ function toDetail(marketItem: MarketItem): MarketItemDetail {
     description: marketItem.description,
     lego_set: marketItem.lego_set.name,
     location: marketItem.location,
-    price: marketItem.price,
+    price: marketItem.price + '$',
     seller: marketItem.seller.username,
     set_state: setStates[marketItem.set_state],
     status: statuses[marketItem.status],
