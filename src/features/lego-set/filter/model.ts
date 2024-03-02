@@ -18,6 +18,7 @@ import { persist } from 'effector-storage/local';
 import { legoSeriesService } from '../../../services/LegoSeriesService.ts';
 import { SelectSearchOption } from '../../../shared/ui/select-search.tsx';
 import { debounce, spread } from 'patronum';
+import { $legoSetOptions, GetLegoSetsFx, toOptions } from '../options/model.ts';
 
 export type LegoSetFilterModel = ReturnType<typeof legoSetFilterFactory>;
 
@@ -42,6 +43,9 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
         init: null as unknown as number,
       },
       series_ids: {
+        init: '',
+      },
+      set_number: {
         init: '',
       },
     },
@@ -96,6 +100,7 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
         npieces_gte: snapshot?.min_pieces,
         npieces_lte: snapshot?.max_pieces,
         series_id__in: snapshot?.series_ids,
+        set_number__in: snapshot?.set_number,
       },
       false
     )
@@ -129,6 +134,11 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
           show: !!filters?.series_ids,
           label: 'Series',
         },
+        set_number: {
+          value: filters?.set_number,
+          show: !!filters?.set_number,
+          label: 'Set number',
+        },
       };
 
       return Object.entries(allFilters).filter(([, value]) => Boolean(value));
@@ -143,7 +153,13 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
 
   sample({
     clock: gate.open,
-    target: [seriesListSearch.fetchEntitiesFx],
+    target: [seriesListSearch.fetchEntitiesFx, GetLegoSetsFx],
+  });
+
+  sample({
+    clock: GetLegoSetsFx.doneData,
+    fn: toOptions,
+    target: $legoSetOptions,
   });
 
   sample({
@@ -159,7 +175,7 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
   });
 
   sample({
-    clock: [cancelTriggered, filtersApplied],
+    clock: disclosure.open,
     target: form.reset,
   });
 
