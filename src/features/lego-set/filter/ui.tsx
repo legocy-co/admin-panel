@@ -47,7 +47,10 @@ export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
       <Popover.Portal>
         <Popover.Content className="rounded w-96 text-white p-4 mt-2 bg-slate">
           <p className="text-xl">Filters</p>
-          <form onSubmit={onSubmit} className="flex flex-col mt-5">
+          <form
+            onSubmit={onSubmit}
+            className="flex h-96 overflow-y-auto overflow-x-hidden flex-col mt-5"
+          >
             <TextFieldAdapter
               field={form.fields.name}
               labelText="Lego set name"
@@ -63,6 +66,10 @@ export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
             <LegoSeriesSearch
               label="Lego series"
               model={model.seriesListSearch}
+            />
+            <NumberFieldAdapter
+              field={model.form.fields.set_number}
+              labelText="Set number"
             />
             <div className="flex gap-5 justify-center">
               <Button onClick={() => model.cancelTriggered()}>Cancel</Button>
