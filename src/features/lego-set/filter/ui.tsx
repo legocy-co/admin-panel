@@ -68,6 +68,7 @@ export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
               model={model.seriesListSearch}
             />
             <NumberFieldAdapter
+              placeholder="76240"
               field={model.form.fields.set_number}
               labelText="Set number"
             />
