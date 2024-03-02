@@ -18,7 +18,6 @@ import { persist } from 'effector-storage/local';
 import { legoSeriesService } from '../../../services/LegoSeriesService.ts';
 import { SelectSearchOption } from '../../../shared/ui/select-search.tsx';
 import { debounce, spread } from 'patronum';
-import { $legoSetOptions, GetLegoSetsFx, toOptions } from '../options/model.ts';
 
 export type LegoSetFilterModel = ReturnType<typeof legoSetFilterFactory>;
 
@@ -46,7 +45,7 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
         init: '',
       },
       set_number: {
-        init: '',
+        init: null as unknown as number,
       },
     },
   });
@@ -153,13 +152,7 @@ export const legoSetFilterFactory = (options: { domain?: Domain }) => {
 
   sample({
     clock: gate.open,
-    target: [seriesListSearch.fetchEntitiesFx, GetLegoSetsFx],
-  });
-
-  sample({
-    clock: GetLegoSetsFx.doneData,
-    fn: toOptions,
-    target: $legoSetOptions,
+    target: seriesListSearch.fetchEntitiesFx,
   });
 
   sample({
