@@ -4,7 +4,6 @@ import React from 'react';
 import { Button } from '../../../shared/ui/button.tsx';
 import {
   NumberFieldAdapter,
-  SelectSearchAdapter,
   TextFieldAdapter,
 } from '../../../shared/ui/form-adapters.tsx';
 import { LegoSetFilterModel, SearchModel } from './model.ts';
@@ -12,14 +11,12 @@ import { EventPayload } from 'effector';
 import { BsChevronDown } from 'react-icons/bs';
 import clsx from 'clsx';
 import { SelectSearch } from '../../../shared/ui/select-search.tsx';
-import { lso } from '../options/index.ts';
 
 export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
   const { gate, disclosure, form } = model;
   useGate(gate);
 
   const [isOpen] = useUnit([disclosure.$isOpen]);
-  const legoSets = useUnit(lso.$legoSetOptions);
 
   const onSubmit = (ev: React.FormEvent) => {
     ev.preventDefault();
@@ -70,14 +67,9 @@ export const LegoSetsFilter = ({ model }: { model: LegoSetFilterModel }) => {
               label="Lego series"
               model={model.seriesListSearch}
             />
-            <SelectSearchAdapter
-              clientSideSearch
+            <NumberFieldAdapter
               field={model.form.fields.set_number}
-              labelText="Lego set"
-              options={legoSets.map((legoSet) => ({
-                value: String(legoSet.number),
-                label: `${legoSet.number} - ${legoSet.name}`,
-              }))}
+              labelText="Set number"
             />
             <div className="flex gap-5 justify-center">
               <Button onClick={() => model.cancelTriggered()}>Cancel</Button>
