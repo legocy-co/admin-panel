@@ -64,7 +64,7 @@ const UpdateMarketItem = async (
 const GetMarketItemsPage = async (
   query: string
 ): Promise<PaginationData<MarketItem[]>> => {
-  const { data } = await axios.get('/market-items/' + query);
+  const { data } = await axios.get('/admin/market-items/' + query);
   const result = MarketItemSchema.array().safeParse(data.data);
   if (!result.success)
     return handleIncorrectParse(

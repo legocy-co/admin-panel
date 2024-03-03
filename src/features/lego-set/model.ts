@@ -94,7 +94,7 @@ const fetchLegoSetFx = attach({
   },
 });
 
-const addCollectionSetFx = attach({
+const addLegoSetFx = attach({
   source: form.$values,
   effect: (values) =>
     legoSetService.CreateLegoSet({
@@ -125,6 +125,11 @@ const updateLegoSetFx = attach({
 const wikiRedirectFx = attach({
   source: gate.state,
   effect: ({ navigateFn }) => navigateFn('/wiki/sets/'),
+});
+
+const detailRedirectFx = attach({
+  source: [gate.state, $setId],
+  effect: ([{ navigateFn }, id]) => navigateFn('/wiki/sets/' + id),
 });
 
 function toForm(values: LegoSet): EventPayload<typeof form.setForm> {
@@ -174,13 +179,18 @@ split({
   match: $isEditing.map(String),
   cases: {
     true: updateLegoSetFx,
-    false: addCollectionSetFx,
+    false: addLegoSetFx,
   },
 });
 
 sample({
-  clock: [addCollectionSetFx.done, updateLegoSetFx.done],
+  clock: addLegoSetFx.done,
   target: wikiRedirectFx,
+});
+
+sample({
+  clock: updateLegoSetFx.done,
+  target: detailRedirectFx,
 });
 
 sample({

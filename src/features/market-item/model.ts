@@ -150,11 +150,16 @@ const listRedirectFx = attach({
   effect: ({ navigateFn }) => navigateFn('/market-items/'),
 });
 
+const detailRedirectFx = attach({
+  source: [$marketItemId, gate.state],
+  effect: ([id, { navigateFn }]) => navigateFn('/market-items/' + id),
+});
+
 function toForm(values: MarketItem): EventPayload<typeof form.setForm> {
   const locationSplit = values.location.split(', ');
   return {
     description: values.description,
-    name: String(values.lego_set_id),
+    name: String(values.lego_set.id),
     city: locationSplit[0],
     country: locationSplit[1],
     price: values.price,
@@ -208,8 +213,13 @@ split({
 });
 
 sample({
-  clock: [addMarketItemFx.done, updateMarketItemFx.done],
+  clock: addMarketItemFx.done,
   target: listRedirectFx,
+});
+
+sample({
+  clock: updateMarketItemFx.done,
+  target: detailRedirectFx,
 });
 
 sample({

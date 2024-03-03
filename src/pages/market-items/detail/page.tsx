@@ -5,6 +5,7 @@ import { addDefaultSrc } from '../../../services/utils.ts';
 import { Button } from '../../../shared/ui/button.tsx';
 import GalleryModal from '../../../components/GalleryModal';
 import * as model from './model.ts';
+import { PageHeading } from '../../../shared/ui/page-heading.tsx';
 
 export const MarketItemDetailPage = () => {
   const params = useParams<'id'>();
@@ -17,6 +18,7 @@ export const MarketItemDetailPage = () => {
 
   return (
     <div className="w-full h-screen flex flex-col items-center">
+      <PageHeading to="/market-items/" />
       <div className="mt-8 mb-9 whitespace-nowrap flex flex-col gap-7">
         <img
           className="w-[300px] md:w-[595px] h-[200px] md:h-[470px] object-cover object-center rounded-md bg-silver cursor-pointer transition-opacity hover:opacity-90 active:opacity-80"
@@ -68,7 +70,7 @@ export const MarketItemDetailPage = () => {
             className="mb-8"
             onClick={() => navigate('/market-items/update/' + marketItem.id)}
           >
-            Edit set
+            Edit market item
           </Button>
         </div>
       </div>
