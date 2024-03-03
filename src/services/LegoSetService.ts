@@ -77,11 +77,11 @@ const UpdateLegoSet = async (
 ): Promise<boolean> => {
   try {
     await axios.put('/admin/sets/' + id, legoSet);
-    toaster.showToastSuccess('Collection set updated');
+    toaster.showToastSuccess('Lego set updated');
 
     return Promise.resolve(true);
   } catch (e) {
-    return handleSetError(e, 'CollectionSet', lsf.form);
+    return handleSetError(e, 'UpdateLegoSet', lsf.form);
   }
 };
 
