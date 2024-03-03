@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/table-core';
 import * as lib from './lib';
 
-const columnHelper = createColumnHelper<lib.MarketItemRow>();
+const columnHelper = createColumnHelper<lib.UserRow>();
 
 export const useColumns = () => {
   return [
@@ -44,7 +44,6 @@ export const useColumns = () => {
     //         onClick={() =>
     //           du.deleteTriggered({
     //             id: info.row.original.id,
-    //             name: info.row.original.lego_set_name,
     //           })
     //         }
     //       >

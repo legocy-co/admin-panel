@@ -1,17 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useGate, useUnit } from 'effector-react';
 import { ColumnControl } from '../../shared/lib/column-control';
-import { Pagination } from '../../shared/lib/pagination';
 import * as model from './model';
 import { useColumns } from './columns.tsx';
 import { Table } from '../../shared/ui/table';
 import { mapSetState } from '../../shared/lib/react.ts';
-import { DeleteMarketItem } from '../../features/market-item/delete';
 
 export const UsersPage = () => {
   useGate(model.gate);
-
-  const navigate = useNavigate();
 
   return (
     <div className="h-full w-full flex flex-col">
@@ -22,8 +18,7 @@ export const UsersPage = () => {
       <div className="flex-grow w-full overflow-y-auto">
         <Content />
       </div>
-      <Pagination.View model={model.paginationModel} />
-      <DeleteMarketItem />
+      {/*<DeleteUser />*/}
     </div>
   );
 };
@@ -31,7 +26,7 @@ export const UsersPage = () => {
 const Content = () => {
   const [users, columnOrder, columnVisibility, columnsSizing, columnSorting] =
     useUnit([
-      model.$marketItems,
+      model.$users,
       model.columnControlModel.$columnOrder,
       model.columnControlModel.$visibility,
       model.columnControlModel.$columnsSizing,
