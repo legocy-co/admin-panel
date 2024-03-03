@@ -28,7 +28,10 @@ export const MarketItemDetailPage = () => {
           alt=""
         />
         <div className="w-[250px] md:w-[577px] align-top inline-block text-xl">
-          <p className="text-3xl font-semibold mb-10 cursor-pointer hover:opacity-90 active:opacity-80">
+          <p
+            onClick={() => navigate('/wiki/sets/' + marketItem.lego_set_id)}
+            className="text-3xl font-semibold mb-10 cursor-pointer hover:opacity-90 active:opacity-80"
+          >
             {marketItem.lego_set}
           </p>
           <div className="flex flex-col justify-between h-48 mb-4">
