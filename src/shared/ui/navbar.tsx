@@ -10,6 +10,8 @@ import LogoutIcon from '../icons/logout.svg?react';
 import SetsIcon from '../icons/box.svg?react';
 import MarketItemsIcon from '../icons/cart.svg?react';
 import UsersIcon from '../icons/user.svg?react';
+import AdminIcon from '../icons/admin.svg?react';
+
 import ChevronLeftIcon from '../icons/chevron-left.svg?react';
 
 type TNavigationItem = {
@@ -51,6 +53,11 @@ const navigationItemsGroups: TNavigationItemsGroup[] = [
         to: '/users',
         Icon: UsersIcon,
         name: 'Users',
+      },
+      {
+        to: '/register-admin',
+        Icon: AdminIcon,
+        name: 'Register admin',
       },
     ],
   },

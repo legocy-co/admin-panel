@@ -5,6 +5,7 @@ import * as model from './model';
 import { useColumns } from './columns.tsx';
 import { Table } from '../../shared/ui/table';
 import { mapSetState } from '../../shared/lib/react.ts';
+import { DeleteUser } from '../../features/user/delete';
 
 export const UsersPage = () => {
   useGate(model.gate);
@@ -18,7 +19,7 @@ export const UsersPage = () => {
       <div className="flex-grow w-full overflow-y-auto">
         <Content />
       </div>
-      {/*<DeleteUser />*/}
+      <DeleteUser />
     </div>
   );
 };

@@ -5,8 +5,9 @@ import {
   UserData,
 } from '../types/UserType.ts';
 import axios from 'axios';
-import { handleIncorrectParse } from './ErrorHandlers.ts';
+import { handleIncorrectParse, handleUserError } from './ErrorHandlers.ts';
 import toaster from '../shared/lib/react-toastify.ts';
+import { ra } from '../features/user/register-admin/index.tsx';
 
 interface UserService {
   GetUsers: () => Promise<User[]>;
@@ -32,8 +33,7 @@ const RegisterAdmin = async (data: RegisterAdminData): Promise<boolean> => {
 
     return Promise.resolve(true);
   } catch (e) {
-    return Promise.reject();
-    // return handleSetError(e, 'Admin', raf.form);
+    return handleUserError(e, 'Admin', ra.form);
   }
 };
 

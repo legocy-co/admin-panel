@@ -1,5 +1,7 @@
 import { createColumnHelper } from '@tanstack/table-core';
 import * as lib from './lib';
+import { Button } from '../../shared/ui/button';
+import { du } from '../../features/user/delete';
 
 const columnHelper = createColumnHelper<lib.UserRow>();
 
@@ -35,22 +37,23 @@ export const useColumns = () => {
       },
     }),
 
-    // columnHelper.display({
-    //   id: 'actions',
-    //   cell: (info) => (
-    //     <div onClick={(e) => e.stopPropagation()}>
-    //       <Button
-    //         className="w-8 h-8 bg-red-100 hover:bg-red-200 active:bg-red-300 rounded-full"
-    //         onClick={() =>
-    //           du.deleteTriggered({
-    //             id: info.row.original.id,
-    //           })
-    //         }
-    //       >
-    //         x
-    //       </Button>
-    //     </div>
-    //   ),
-    // }),
+    columnHelper.display({
+      id: 'actions',
+      cell: (info) => (
+        <div onClick={(e) => e.stopPropagation()}>
+          <Button
+            className="w-8 h-8 bg-red-100 hover:bg-red-200 active:bg-red-300 rounded-full"
+            onClick={() =>
+              du.deleteTriggered({
+                id: info.row.original.id,
+                username: info.row.original.username,
+              })
+            }
+          >
+            x
+          </Button>
+        </div>
+      ),
+    }),
   ];
 };

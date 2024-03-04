@@ -1,5 +1,13 @@
 import { UserImageSchema } from './UserImage.ts';
 import { z } from 'zod';
+import { Form } from 'effector-forms';
+
+export type RegisterAdminForm = Form<{
+  username: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}>;
 
 export type RegisterAdminData = {
   email: string;
