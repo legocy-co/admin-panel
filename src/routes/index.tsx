@@ -26,6 +26,8 @@ import { MarketItemDetailPage } from '../pages/market-items/detail';
 import UpdateMarketItemPage from '../pages/market-items/update';
 import UsersPage from '../pages/users/index.tsx';
 import RegisterAdminPage from '../pages/users/register-admin/index.tsx';
+import { UserDetailPage } from '../pages/users/detail';
+import UpdateUserPage from '../pages/users/update/index.tsx';
 
 const AppRouter = () => {
   const navigate = useNavigate();
@@ -73,6 +75,8 @@ const AppRouter = () => {
 
         <Route path="users" element={<Outlet />}>
           <Route index element={<UsersPage />} />
+          <Route path=":id" element={<UserDetailPage />} />
+          <Route path="update/:id" element={<UpdateUserPage />} />
         </Route>
 
         <Route path="register-admin" element={<RegisterAdminPage />} />

@@ -15,6 +15,12 @@ export type RegisterAdminData = {
   username: string;
 };
 
+export type UserForm = Form<{
+  email: string;
+  role: string;
+  username: string;
+}>;
+
 export type UserData = {
   email: string;
   role: number;

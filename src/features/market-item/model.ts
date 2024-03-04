@@ -4,7 +4,7 @@ import { createGate } from 'effector-react';
 import { NavigateFunction } from 'react-router-dom';
 import { z } from 'zod';
 import { MarketItem, setStates, statuses } from '../../types/MarketItemType.ts';
-import { attach, createDomain, EventPayload, sample, split } from 'effector';
+import { attach, EventPayload, sample, split } from 'effector';
 import { marketItemService } from '../../services/MarketItemService.ts';
 import {
   $legoSetOptions,
@@ -98,10 +98,6 @@ export const form = createForm({
   },
 });
 
-const domain = createDomain();
-
-export const setForm = domain.createEvent<MarketItem>();
-
 const $marketItemId = gate.state.map(({ id }) => id);
 
 const $isEditing = $marketItemId.map((id) => id !== null);
@@ -194,11 +190,6 @@ sample({
 
 sample({
   clock: fetchMarketItemFx.doneData,
-  target: setForm,
-});
-
-sample({
-  clock: setForm,
   fn: toForm,
   target: form.setForm,
 });

@@ -8,6 +8,7 @@ import axios from 'axios';
 import { handleIncorrectParse, handleUserError } from './ErrorHandlers.ts';
 import toaster from '../shared/lib/react-toastify.ts';
 import { ra } from '../features/user/register-admin/index.tsx';
+import { uf } from '../features/user/index.tsx';
 
 interface UserService {
   GetUsers: () => Promise<User[]>;
@@ -56,8 +57,7 @@ const UpdateUser = async (
 
     return Promise.resolve(true);
   } catch (e) {
-    return Promise.reject();
-    // return handleSetError(e, 'UpdateUser', uf.form);
+    return handleUserError(e, 'UpdateUser', uf.form);
   }
 };
 
@@ -68,6 +68,7 @@ const DeleteUser = async (id: number | string): Promise<boolean> => {
 
     return Promise.resolve(true);
   } catch (e) {
+    toaster.showToastError("Can't delete user");
     return Promise.reject(e);
   }
 };
