@@ -1,8 +1,9 @@
 import { createGate } from 'effector-react';
 import { NavigateFunction } from 'react-router-dom';
-import { attach, createStore, sample } from 'effector';
+import { attach, createEvent, createStore, sample } from 'effector';
 import { userService } from '../../../services/UserService.ts';
 import { User } from '../../../types/UserType.ts';
+import { UserImage } from '../../../types/UserImageType.ts';
 
 type UserDetail = {
   id: number;
@@ -23,11 +24,25 @@ export const $userDetail = createStore<UserDetail>({
   username: '',
 });
 
+export const $userImages = createStore<UserImage[]>([]);
+
+const $id = gate.state.map(({ id }) => id);
+
 const GetUserFx = attach({
-  source: gate.state.map(({ id }) => id),
+  source: $id,
   effect: (id) => {
     if (!id) throw new Error('No id provided');
     return userService.GetUser(id);
+  },
+});
+
+export const imagesChanged = createEvent();
+
+const GetUserImagesFx = attach({
+  source: $id,
+  effect: (id) => {
+    if (!id) throw new Error('No id provided');
+    return userService.GetUserImages(id);
   },
 });
 
@@ -46,7 +61,17 @@ sample({
 });
 
 sample({
+  clock: [gate.open, imagesChanged],
+  target: GetUserImagesFx,
+});
+
+sample({
   clock: GetUserFx.doneData,
   fn: toDetail,
   target: $userDetail,
+});
+
+sample({
+  clock: GetUserImagesFx.doneData,
+  target: $userImages,
 });

@@ -9,6 +9,8 @@ import { handleIncorrectParse, handleUserError } from './ErrorHandlers.ts';
 import toaster from '../shared/lib/react-toastify.ts';
 import { ra } from '../features/user/register-admin/index.tsx';
 import { uf } from '../features/user/index.tsx';
+import { UserImage } from '../types/UserImageType.ts';
+import { UserImageSchema } from '../types/UserImage.ts';
 
 interface UserService {
   GetUsers: () => Promise<User[]>;
@@ -16,7 +18,16 @@ interface UserService {
   GetUser: (id: number | string) => Promise<User>;
   UpdateUser: (id: number | string, user: UserData) => Promise<boolean>;
   DeleteUser: (id: number | string) => Promise<boolean>;
+  GetUserImages: (userID: number | string) => Promise<UserImage[]>;
+  UploadUserImage: (
+    file: FormData,
+    userID: number | string
+  ) => Promise<boolean>;
 }
+
+type ImagesResponse = {
+  images: object[];
+};
 
 const GetUsers = async (): Promise<User[]> => {
   const response = await axios.get<object[]>('/admin/users/');
@@ -73,10 +84,39 @@ const DeleteUser = async (id: number | string): Promise<boolean> => {
   }
 };
 
+const GetUserImages = async (userID: number | string): Promise<UserImage[]> => {
+  const response = await axios.get<ImagesResponse>('/users/images/' + userID);
+  const result = UserImageSchema.array().safeParse(response.data.images);
+  if (!result.success)
+    return handleIncorrectParse(
+      result.error,
+      'GetUserImages',
+      "Can't get user images"
+    );
+
+  return result.data;
+};
+
+const UploadUserImage = async (
+  file: FormData,
+  userID: number | string
+): Promise<boolean> => {
+  try {
+    await axios.post(`/users/images/${userID}/avatar`, file);
+    toaster.showToastSuccess('User image uploaded');
+
+    return Promise.resolve(true);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 export const userService: UserService = {
   GetUsers: GetUsers,
   RegisterAdmin: RegisterAdmin,
   GetUser: GetUser,
   UpdateUser: UpdateUser,
   DeleteUser: DeleteUser,
+  GetUserImages: GetUserImages,
+  UploadUserImage: UploadUserImage,
 };
