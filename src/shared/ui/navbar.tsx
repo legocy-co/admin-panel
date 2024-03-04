@@ -9,6 +9,9 @@ import { persist } from 'effector-storage/local';
 import LogoutIcon from '../icons/logout.svg?react';
 import SetsIcon from '../icons/box.svg?react';
 import MarketItemsIcon from '../icons/cart.svg?react';
+import UsersIcon from '../icons/user.svg?react';
+import AdminIcon from '../icons/admin.svg?react';
+
 import ChevronLeftIcon from '../icons/chevron-left.svg?react';
 
 type TNavigationItem = {
@@ -40,6 +43,21 @@ const navigationItemsGroups: TNavigationItemsGroup[] = [
         to: '/market-items',
         Icon: MarketItemsIcon,
         name: 'Market items',
+      },
+    ],
+  },
+  {
+    name: 'users',
+    items: [
+      {
+        to: '/users',
+        Icon: UsersIcon,
+        name: 'Users',
+      },
+      {
+        to: '/register-admin',
+        Icon: AdminIcon,
+        name: 'Register admin',
       },
     ],
   },
@@ -133,7 +151,7 @@ const NavigationItem = ({ to, name, Icon }: TNavigationItem) => {
       to={to}
       className={({ isActive }) =>
         clsx(
-          'w-full flex items-center space-x-2 px-2 py-3 rounded-lg transition-all group',
+          'w-full flex items-center space-x-2 px-2 py-3 mb-1 rounded-lg transition-all group',
           {
             'bg-white bg-opacity-5': isActive,
             'hover:bg-white hover:bg-opacity-5': !isActive,

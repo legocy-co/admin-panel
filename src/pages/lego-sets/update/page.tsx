@@ -6,7 +6,7 @@ export const UpdateLegoSetPage = () => {
   return (
     <div className="w-full h-full flex flex-col items-center">
       <PageHeading
-        to={'/wiki/sets/' + history.location?.pathname.split('/')[3]}
+        to={'/wiki/sets/' + history.location?.pathname.split('/')[4]}
       >
         Edit lego set
       </PageHeading>
