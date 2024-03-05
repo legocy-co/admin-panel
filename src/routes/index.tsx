@@ -28,6 +28,7 @@ import UsersPage from '../pages/users/index.tsx';
 import RegisterAdminPage from '../pages/users/register-admin/index.tsx';
 import { UserDetailPage } from '../pages/users/detail';
 import UpdateUserPage from '../pages/users/update/index.tsx';
+import { LegoSeriesPage } from '../pages/lego-series/page.tsx';
 
 const AppRouter = () => {
   const navigate = useNavigate();
@@ -59,11 +60,17 @@ const AppRouter = () => {
       >
         <Route index element={<Navigate to="wiki/sets" />} />
 
-        <Route path="wiki/sets" element={<Outlet />}>
-          <Route index element={<LegoSetsPage />} />
-          <Route path="add" element={<AddLegoSetPage />} />
-          <Route path=":id" element={<LegoSetDetailPage />} />
-          <Route path="update/:id" element={<UpdateLegoSetPage />} />
+        <Route path="wiki" element={<Outlet />}>
+          <Route index element={<Navigate to="/" />} />
+          <Route path="sets" element={<Outlet />}>
+            <Route index element={<LegoSetsPage />} />
+            <Route path="add" element={<AddLegoSetPage />} />
+            <Route path=":id" element={<LegoSetDetailPage />} />
+            <Route path="update/:id" element={<UpdateLegoSetPage />} />
+          </Route>
+          <Route path="series" element={<Outlet />}>
+            <Route index element={<LegoSeriesPage />} />
+          </Route>
         </Route>
 
         <Route path="market-items" element={<Outlet />}>
