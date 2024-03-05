@@ -3,6 +3,7 @@ import { createColumnControlModel } from '../../shared/lib/column-control';
 import { createDomain, createEffect, sample } from 'effector';
 import { createGate } from 'effector-react';
 import { legoSeriesService } from '../../services/LegoSeriesService.ts';
+import { deleted } from '../../features/lego-series/delete/model.ts';
 
 export const gate = createGate();
 
@@ -34,10 +35,10 @@ sample({
   target: $series,
 });
 
-// sample({
-//   clock: deleted,
-//   source: $series,
-//   fn: (sets: SeriesRow[], id: number) =>
-//     sets.filter((ser: SeriesRow) => ser.id !== id),
-//   target: $series,
-// });
+sample({
+  clock: deleted,
+  source: $series,
+  fn: (sets: SeriesRow[], id: number) =>
+    sets.filter((ser: SeriesRow) => ser.id !== id),
+  target: $series,
+});

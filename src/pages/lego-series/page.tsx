@@ -7,6 +7,7 @@ import { ColumnControl } from '../../shared/lib/column-control';
 import { useColumns } from './columns.tsx';
 import { Table } from '../../shared/ui/table';
 import { mapSetState } from '../../shared/lib/react.ts';
+import { DeleteLegoSeries } from '../../features/lego-series/delete';
 
 export const LegoSeriesPage = () => {
   useGate(model.gate);
@@ -30,7 +31,7 @@ export const LegoSeriesPage = () => {
       <div className="flex-grow w-full overflow-y-auto">
         <Content />
       </div>
-      {/*<DeleteLegoSeries />*/}
+      <DeleteLegoSeries />
     </div>
   );
 };
@@ -44,12 +45,10 @@ const Content = () => {
       model.columnControlModel.$columnsSizing,
       model.columnControlModel.$columnSorting,
     ]);
-  const navigate = useNavigate();
   const columns = useColumns();
 
   return (
     <Table
-      onRowClick={(row) => navigate(`${row.id}`)}
       columns={columns}
       data={series}
       columnVisibility={columnVisibility}
