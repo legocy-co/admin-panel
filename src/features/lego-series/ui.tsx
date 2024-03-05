@@ -26,7 +26,7 @@ export const LegoSeriesForm = () => {
       <div className="relative flex justify-center">
         {!eachValid && <FormError>{fields.name.errorText()}</FormError>}
         <Button type="submit" className="mt-14 w-64">
-          {params.id ? 'Update lego set' : 'Add lego set'}
+          {`${params.id ? 'Update' : 'Add'} lego series`}
         </Button>
       </div>
     </form>
