@@ -11,6 +11,7 @@ import SetsIcon from '../icons/box.svg?react';
 import MarketItemsIcon from '../icons/cart.svg?react';
 import UsersIcon from '../icons/user.svg?react';
 import AdminIcon from '../icons/admin.svg?react';
+import SeriesIcon from '../icons/series.svg?react';
 
 import ChevronLeftIcon from '../icons/chevron-left.svg?react';
 
@@ -33,6 +34,11 @@ const navigationItemsGroups: TNavigationItemsGroup[] = [
         to: '/wiki/sets',
         Icon: SetsIcon,
         name: 'Sets',
+      },
+      {
+        to: '/wiki/series',
+        Icon: SeriesIcon,
+        name: 'Series',
       },
     ],
   },
