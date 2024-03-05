@@ -30,6 +30,7 @@ import { UserDetailPage } from '../pages/users/detail';
 import UpdateUserPage from '../pages/users/update/index.tsx';
 import { LegoSeriesPage } from '../pages/lego-series/page.tsx';
 import AddLegoSeriesPage from '../pages/lego-series/add/index.tsx';
+import UpdateLegoSeriesPage from '../pages/lego-series/update/index.tsx';
 
 const AppRouter = () => {
   const navigate = useNavigate();
@@ -76,6 +77,7 @@ const AppRouter = () => {
           <Route path="series" element={<Outlet />}>
             <Route index element={<LegoSeriesPage />} />
             <Route path="add" element={<AddLegoSeriesPage />} />
+            <Route path="update/:id" element={<UpdateLegoSeriesPage />} />
           </Route>
         </Route>
 
