@@ -1,11 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGate, useUnit } from 'effector-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { addDefaultSrc } from '../../../services/utils.ts';
 import { Button } from '../../../shared/ui/button.tsx';
 import GalleryModal from '../../../components/GalleryModal';
 import * as model from './model.ts';
 import { PageHeading } from '../../../shared/ui/page-heading.tsx';
+import toaster from '../../../shared/lib/react-toastify.ts';
+import { marketItemService } from '../../../services/MarketItemService.ts';
 
 export const MarketItemDetailPage = () => {
   const params = useParams<'id'>();
@@ -16,17 +18,59 @@ export const MarketItemDetailPage = () => {
   const marketItem = useUnit(model.$marketItemDetail);
   const [showGallery, setShowGallery] = useState<number>(-1);
 
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.currentTarget.files?.[0];
+    if (file) {
+      if (file.size > 20000000) {
+        toaster.showToastError('Maximum file size is 20MB');
+        return;
+      }
+
+      const data = new FormData();
+      data.append('file', file);
+      await marketItemService.UploadImage(data, marketItem.id);
+
+      model.imagesChanged();
+    }
+  }
+
+  async function handleImageDelete(i: number) {
+    await marketItemService.DeleteImage(marketItem.images![i].id);
+    model.imagesChanged();
+  }
+
   return (
     <div className="w-full h-screen flex flex-col items-center">
       <PageHeading to="/market-items/" />
       <div className="mt-8 mb-9 whitespace-nowrap flex flex-col gap-7">
-        <img
-          className="w-[300px] md:w-[595px] h-[200px] md:h-[470px] object-cover object-center rounded-md bg-silver cursor-pointer transition-opacity hover:opacity-90 active:opacity-80"
-          src={'' + marketItem.images?.slice(0, 1).map((img) => img.image_url)}
-          onError={addDefaultSrc}
-          onClick={() => setShowGallery(0)}
-          alt=""
-        />
+        {marketItem.images.length > 0 ? (
+          <img
+            className="w-[300px] md:w-[595px] h-[200px] md:h-[470px] object-cover object-center rounded-md bg-silver cursor-pointer transition-opacity hover:opacity-90 active:opacity-80"
+            src={
+              '' + marketItem.images?.slice(0, 1).map((img) => img.image_url)
+            }
+            onError={addDefaultSrc}
+            onClick={() => setShowGallery(0)}
+            alt=""
+          />
+        ) : (
+          <div>
+            <input
+              accept=".jpg, .jpeg, .png, .heic"
+              className="hidden"
+              type="file"
+              name="input_image"
+              id="input_image"
+              onChange={handleImageUpload}
+            />
+            <label
+              htmlFor="input_image"
+              className="text-center cursor-pointer p-5 bg-legocy rounded-xl text-2xl text-black transition-colors hover:bg-legocy-hover active:bg-legocy-active"
+            >
+              Upload image
+            </label>
+          </div>
+        )}
         <div className="w-[250px] md:w-[577px] align-top inline-block text-xl">
           <p
             onClick={() => navigate('/wiki/sets/' + marketItem.lego_set_id)}
@@ -77,8 +121,11 @@ export const MarketItemDetailPage = () => {
           </Button>
         </div>
       </div>
-      {showGallery > -1 && marketItem.images && (
+      {showGallery > -1 && marketItem.images.length > 0 && (
         <GalleryModal
+          changeable
+          onUpload={handleImageUpload}
+          onDelete={handleImageDelete}
           list={marketItem.images.map((img) => img.image_url)}
           i={showGallery}
           onClose={() => setShowGallery(-1)}

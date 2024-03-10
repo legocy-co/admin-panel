@@ -19,6 +19,8 @@ interface MarketItemService {
   ) => Promise<boolean>;
   GetMarketItemsPage: (query: string) => Promise<PaginationData<MarketItem[]>>;
   DeleteMarketItem: (id: number | string) => Promise<boolean>;
+  UploadImage: (file: FormData, id: number | string) => Promise<boolean>;
+  DeleteImage: (id: number | string) => Promise<boolean>;
 }
 
 const CreateMarketItem = async (
@@ -87,10 +89,37 @@ const DeleteMarketItem = async (id: number | string): Promise<boolean> => {
   }
 };
 
+const UploadImage = async (
+  file: FormData,
+  id: number | string
+): Promise<boolean> => {
+  try {
+    await axios.post('/admin/market-items/images/' + id, file);
+    toaster.showToastSuccess('Image uploaded');
+
+    return Promise.resolve(true);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const DeleteImage = async (id: number | string): Promise<boolean> => {
+  try {
+    await axios.delete('/admin/market-items/images/' + id);
+    toaster.showToastSuccess('Image deleted');
+
+    return Promise.resolve(true);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 export const marketItemService: MarketItemService = {
   CreateMarketItem: CreateMarketItem,
   GetMarketItem: GetMarketItem,
   UpdateMarketItem: UpdateMarketItem,
   GetMarketItemsPage: GetMarketItemsPage,
   DeleteMarketItem: DeleteMarketItem,
+  UploadImage: UploadImage,
+  DeleteImage: DeleteImage,
 };
