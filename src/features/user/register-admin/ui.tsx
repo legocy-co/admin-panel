@@ -45,7 +45,7 @@ export const RegisterAdmin = () => {
               fields.passwordConfirm.errorText()}
           </FormError>
         )}
-        <Button className="mt-20" type="submit">
+        <Button className="my-20" type="submit">
           Register admin
         </Button>
       </div>
