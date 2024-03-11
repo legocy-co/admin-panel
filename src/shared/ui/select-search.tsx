@@ -70,7 +70,7 @@ export const SelectSearch = ({
   const renderOptions = clientSideSearch ? filteredOptions : options;
 
   return (
-    <div ref={ref} className="w-full relative flex flex-col">
+    <div ref={ref} className="w-60 relative flex flex-col">
       <Input
         onClick={handleInputClick}
         className={className}
@@ -84,7 +84,7 @@ export const SelectSearch = ({
         <Portal.Root>
           <div
             ref={containerRef}
-            className="absolute bg-dark text-white rounded overflow-hidden max-h-60 overflow-y-auto w-[343px] shadow-md border-black border-solid border"
+            className="absolute bg-dark text-white rounded overflow-hidden max-h-60 overflow-y-auto w-60 sm:w-[343px] shadow-md border-black border-solid border"
             style={coords}
           >
             {isEmptyOptions &&

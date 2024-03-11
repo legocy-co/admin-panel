@@ -84,7 +84,7 @@ export const SelectSearchAdapter = ({
         activeValue={activeValue}
       />
       <div
-        className="absolute top-8 right-4 cursor-pointer"
+        className="absolute top-8 right-6 sm:right-4 cursor-pointer"
         onClick={handleReset}
       >
         x
@@ -131,7 +131,7 @@ export const SelectFieldAdapter = ({
       disabled={disabled}
       onChange={(ev) => onChange(ev.currentTarget.value)}
       className={clsx(
-        'block w-[343px] h-[44px] bg-dark border border-solid border-slate rounded-xl indent-3 pr-10 outline-0 mb-3.5',
+        'block w-60 sm:w-[343px] h-[44px] bg-dark border border-solid border-slate rounded-xl indent-3 pr-10 outline-0 mb-3.5',
         { 'bg-rose text-charcoal': isInvalid }
       )}
     >

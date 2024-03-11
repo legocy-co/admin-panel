@@ -30,6 +30,7 @@ export const ValuationsForm = () => {
         </p>
       </div>
       <NumberFieldAdapter
+        className="!w-min-52 lg:!w-3/4"
         field={model.form.fields[`${state}` as keyof typeof setStates]}
         labelText=""
       />
@@ -46,7 +47,7 @@ export const ValuationsForm = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="grid grid-flow-col gap-10 grid-rows-3 mt-7 transition-all"
+      className="flex flex-col items-center lg:grid grid-flow-col gap-10 grid-rows-3 mt-7 transition-all"
     >
       {valuationsElement}
       <div className="relative flex justify-center">
@@ -60,7 +61,7 @@ export const ValuationsForm = () => {
               fields.BUILT_PIECES_LOST.errorText()}
           </FormError>
         )}
-        <Button type="submit" className="mt-14 w-64">
+        <Button type="submit" className="m-7 w-28">
           Save
         </Button>
       </div>

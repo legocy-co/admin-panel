@@ -20,7 +20,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           'focus:outline-none focus:border-primary-default',
           'placeholder:opacity-95',
           'floating-input-base',
-          'w-full',
+          'w-60 sm:w-[343px]',
           className
         )}
         placeholder={labelText}
