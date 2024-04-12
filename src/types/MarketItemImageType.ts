@@ -4,6 +4,6 @@ export type MarketItemImage = z.infer<typeof MarketItemImageSchema>;
 
 export const MarketItemImageSchema = z.object({
   id: z.number(),
-  image_url: z.string(),
-  is_main: z.boolean(),
+  imageURL: z.string(),
+  isMain: z.boolean(),
 });

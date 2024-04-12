@@ -4,10 +4,10 @@ import { LegoSeriesSchema } from './LegoSeriesType.ts';
 import { Form } from 'effector-forms';
 
 export type LegoSetData = {
-  n_pieces: number;
+  nPieces: number;
   name: string;
   number: number;
-  series_id: number;
+  seriesID: number;
 };
 
 export type LegoSetForm = Form<{
@@ -22,8 +22,8 @@ export type LegoSet = z.infer<typeof LegoSetSchema>;
 export const LegoSetSchema = z.object({
   id: z.number(),
   images: z.array(LegoSetImageSchema).nullable(),
+  nPieces: z.number(),
   name: z.string(),
   number: z.number(),
-  n_pieces: z.number(),
   series: LegoSeriesSchema,
 });

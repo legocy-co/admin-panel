@@ -108,17 +108,17 @@ const pushValuationsFx = attach({
         default:
           if (!initialValuation) {
             await valuationService.CreateValuation({
-              valuation: Object.values(values)[i],
+              legoSetID: Number(legoSetId),
               state: Object.keys(values)[i],
-              lego_set_id: Number(legoSetId),
+              valuation: Object.values(values)[i],
             });
           } else {
             console.log(initialValuation);
             await valuationService.UpdateValuation(
               {
-                valuation: Object.values(values)[i],
+                legoSetID: Number(legoSetId),
                 state: Object.keys(values)[i],
-                lego_set_id: Number(legoSetId),
+                valuation: Object.values(values)[i],
               },
               initialValuation.id
             );

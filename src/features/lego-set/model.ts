@@ -98,10 +98,10 @@ const addLegoSetFx = attach({
   source: form.$values,
   effect: (values) =>
     legoSetService.CreateLegoSet({
-      n_pieces: values.n_pieces,
+      nPieces: values.n_pieces,
       name: values.name,
       number: values.number,
-      series_id: Number(values.series_id),
+      seriesID: Number(values.series_id),
     }),
 });
 
@@ -113,10 +113,10 @@ const updateLegoSetFx = attach({
   effect: ({ id, data }) =>
     legoSetService.UpdateLegoSet(
       {
-        n_pieces: data.n_pieces,
+        nPieces: data.n_pieces,
         name: data.name,
         number: data.number,
-        series_id: Number(data.series_id),
+        seriesID: Number(data.series_id),
       },
       id!
     ),
@@ -134,7 +134,7 @@ const detailRedirectFx = attach({
 
 function toForm(values: LegoSet): EventPayload<typeof form.setForm> {
   return {
-    n_pieces: values.n_pieces,
+    n_pieces: values.nPieces,
     name: values.name,
     number: values.number,
     series_id: String(values.series.id),

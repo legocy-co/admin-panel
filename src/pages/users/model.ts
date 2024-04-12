@@ -3,6 +3,7 @@ import { createDomain, createEffect, sample } from 'effector';
 import { createColumnControlModel } from '../../shared/lib/column-control';
 import { columns, toUserRows, UserRow } from './lib.ts';
 import { userService } from '../../services/UserService.ts';
+import { du } from '../../features/user/delete/index.tsx';
 
 export const gate = createGate();
 
@@ -33,10 +34,10 @@ sample({
   target: $users,
 });
 
-// sample({
-//   clock: du.deleted,
-//   source: $users,
-//   fn: (users: UserRow[], id: number) =>
-//     users.filter((user: UserRow) => user.id !== id),
-//   target: $users,
-// });
+sample({
+  clock: du.deleted,
+  source: $users,
+  fn: (users: UserRow[], id: number) =>
+    users.filter((user: UserRow) => user.id !== id),
+  target: $users,
+});
