@@ -19,12 +19,12 @@ export type MarketItemForm = Form<{
 }>;
 
 export type MarketItemData = {
-  lego_set_id: number;
-  set_state: keyof typeof setStates;
   description: string;
-  price: number;
+  legoSetID: number;
   location: string;
-  seller_id: number;
+  price: number;
+  sellerID: number;
+  setState: keyof typeof setStates;
   status: keyof typeof statuses;
 };
 
@@ -44,14 +44,14 @@ export const statuses = {
 };
 
 export const MarketItemSchema = z.object({
-  id: z.number(),
-  price: z.number(),
-  location: z.string(),
-  lego_set: LegoSetSchema,
-  lego_set_id: z.number().optional(),
-  seller: UserSchema,
-  status: objectKeysToZodEnum(statuses),
-  set_state: objectKeysToZodEnum(setStates),
   description: z.string(),
+  id: z.number(),
   images: z.array(MarketItemImageSchema),
+  legoSet: LegoSetSchema,
+  legoSetID: z.number().optional(),
+  location: z.string(),
+  price: z.number(),
+  seller: UserSchema,
+  setState: objectKeysToZodEnum(setStates),
+  status: objectKeysToZodEnum(statuses),
 });

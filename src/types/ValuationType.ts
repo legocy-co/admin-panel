@@ -4,7 +4,7 @@ import objectKeysToZodEnum from '../shared/lib/zod.ts';
 import { setStates } from './MarketItemType.ts';
 
 export type ValuationData = {
-  lego_set_id: number;
+  legoSetID: number;
   state: string;
   valuation: number;
 };
@@ -12,8 +12,8 @@ export type ValuationData = {
 export type Valuation = z.infer<typeof ValuationSchema>;
 
 export const ValuationSchema = z.object({
-  valuation: z.number(),
   id: z.number(),
-  lego_set: LegoSetSchema,
+  legoSet: LegoSetSchema,
   state: objectKeysToZodEnum(setStates),
+  valuation: z.number(),
 });

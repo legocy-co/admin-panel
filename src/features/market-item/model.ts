@@ -114,13 +114,13 @@ const addMarketItemFx = attach({
   source: form.$values,
   effect: (values) =>
     marketItemService.CreateMarketItem({
-      seller_id: Number(values.seller_id),
-      status: values.status,
       description: values.description,
-      lego_set_id: Number(values.name),
+      legoSetID: Number(values.name),
       location: `${values.city}, ${values.country}`,
       price: values.price,
-      set_state: values.set_state,
+      sellerID: Number(values.seller_id),
+      setState: values.set_state,
+      status: values.status,
     }),
 });
 
@@ -132,11 +132,11 @@ const updateMarketItemFx = attach({
   effect: ({ id, data }) =>
     marketItemService.UpdateMarketItem(id!, {
       description: data.description,
-      lego_set_id: Number(data.name),
+      legoSetID: Number(data.name),
       location: `${data.city}, ${data.country}`,
       price: data.price,
-      seller_id: Number(data.seller_id),
-      set_state: data.set_state,
+      sellerID: Number(data.seller_id),
+      setState: data.set_state,
       status: data.status,
     }),
 });
@@ -154,13 +154,13 @@ const detailRedirectFx = attach({
 function toForm(values: MarketItem): EventPayload<typeof form.setForm> {
   const locationSplit = values.location.split(', ');
   return {
-    description: values.description,
-    name: String(values.lego_set.id),
     city: locationSplit[0],
     country: locationSplit[1],
+    description: values.description,
+    name: String(values.legoSet.id),
     price: values.price,
     seller_id: String(values.seller.id),
-    set_state: values.set_state,
+    set_state: values.setState,
     status: values.status,
   };
 }

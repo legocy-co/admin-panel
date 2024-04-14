@@ -52,16 +52,16 @@ const GetMarketItemFx = attach({
 
 function toDetail(marketItem: MarketItem): MarketItemDetail {
   return {
-    id: marketItem.id,
-    lego_set_id: marketItem.lego_set.id,
     description: marketItem.description,
-    lego_set: marketItem.lego_set.name,
+    id: marketItem.id,
+    images: marketItem.images,
+    lego_set: marketItem.legoSet.name,
+    lego_set_id: marketItem.legoSet.id,
     location: marketItem.location,
     price: marketItem.price + '$',
     seller: marketItem.seller.username,
-    set_state: setStates[marketItem.set_state],
+    set_state: setStates[marketItem.setState],
     status: statuses[marketItem.status],
-    images: marketItem.images,
   };
 }
 

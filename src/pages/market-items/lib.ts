@@ -49,11 +49,11 @@ export function toMarketItemRows(
 ): MarketItemRow[] {
   return response.data.map((marketItem) => ({
     id: marketItem.id,
-    price: '$' + marketItem.price,
+    lego_set_name: marketItem.legoSet.name,
     location: marketItem.location,
-    lego_set_name: marketItem.lego_set.name,
+    price: '$' + marketItem.price,
     seller_username: marketItem.seller.username,
+    set_state: setStates[marketItem.setState as keyof typeof setStates],
     status: statuses[marketItem.status as keyof typeof statuses],
-    set_state: setStates[marketItem.set_state as keyof typeof setStates],
   }));
 }
