@@ -44,7 +44,7 @@ export const LegoSetDetailInfoPage = () => {
         {legoSet.images ? (
           <img
             className="w-[300px] md:w-[595px] h-[200px] md:h-[470px] object-cover object-center rounded-md bg-silver cursor-pointer transition-opacity hover:opacity-90 active:opacity-80"
-            src={'' + legoSet.images?.slice(0, 1).map((img) => img.image_url)}
+            src={'' + legoSet.images?.slice(0, 1).map((img) => img.imageURL)}
             onError={addDefaultSrc}
             onClick={() => setShowGallery(0)}
             alt=""
@@ -99,7 +99,7 @@ export const LegoSetDetailInfoPage = () => {
           changeable
           onUpload={handleImageUpload}
           onDelete={handleImageDelete}
-          list={legoSet.images.map((img) => img.image_url)}
+          list={legoSet.images.map((img) => img.imageURL)}
           i={showGallery}
           onClose={() => setShowGallery(-1)}
         />

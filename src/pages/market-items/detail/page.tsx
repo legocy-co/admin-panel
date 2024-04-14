@@ -47,7 +47,7 @@ export const MarketItemDetailPage = () => {
           <img
             className="w-[300px] md:w-[595px] h-[200px] md:h-[470px] object-cover object-center rounded-md bg-silver cursor-pointer transition-opacity hover:opacity-90 active:opacity-80"
             src={
-              '' + marketItem.images?.slice(0, 1).map((img) => img.image_url)
+              '' + marketItem.images?.slice(0, 1).map((img) => img.imageURL)
             }
             onError={addDefaultSrc}
             onClick={() => setShowGallery(0)}
@@ -126,7 +126,7 @@ export const MarketItemDetailPage = () => {
           changeable
           onUpload={handleImageUpload}
           onDelete={handleImageDelete}
-          list={marketItem.images.map((img) => img.image_url)}
+          list={marketItem.images.map((img) => img.imageURL)}
           i={showGallery}
           onClose={() => setShowGallery(-1)}
         />
