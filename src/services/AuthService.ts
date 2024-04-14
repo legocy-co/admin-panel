@@ -21,12 +21,12 @@ export interface TokenType {
 }
 
 type AuthResponse = {
-  access_token: string;
-  refresh_token: string;
+  accessToken: string;
+  refreshToken: string;
 };
 
 type RefreshTokenResponse = {
-  access_token: string;
+  accessToken: string;
 };
 
 const IsAuthorized = () => {
@@ -41,8 +41,8 @@ const SignIn = async (data: SignInData) => {
       .then((response) => response.data);
 
     const storage = GetCredentials();
-    storage.accessToken = response.access_token;
-    storage.refreshToken = response.refresh_token;
+    storage.accessToken = response.accessToken;
+    storage.refreshToken = response.refreshToken;
     SetCredentials(storage);
 
     axios.defaults.headers.common.Authorization = GetAccessTokenHeader();
@@ -59,7 +59,7 @@ const RefreshToken = async () => {
     })
     .then((response) => response.data);
 
-  storage.accessToken = response.access_token;
+  storage.accessToken = response.accessToken;
   SetCredentials(storage);
 };
 
