@@ -41,7 +41,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           disabled={isDisabled}
           ref={ref}
           className={clsx(
-            'block w-60 sm:w-[343px] h-[44px] dark:bg-dark border border-solid border-slate rounded-xl !dark:text-charcoal indent-3 pr-10 outline-0 mb-3.5',
+            'block w-60 sm:w-[343px] h-[44px] bg-dark border border-solid border-slate rounded-xl !dark:text-charcoal indent-3 pr-10 outline-0 mb-3.5',
             { 'bg-rose dark:bg-rose dark:text-charcoal': isInvalid },
             { 'no-scroll': isNumber },
             className

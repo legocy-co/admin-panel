@@ -80,7 +80,7 @@ const GetMarketItemsPage = async (
 
 const DeleteMarketItem = async (id: number | string): Promise<boolean> => {
   try {
-    await axios.delete('/market-items/' + id);
+    await axios.delete('/admin/market-items/' + id);
     toaster.showToastSuccess('Market item deleted');
 
     return Promise.resolve(true);
