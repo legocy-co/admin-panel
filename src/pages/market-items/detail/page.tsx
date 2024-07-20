@@ -46,9 +46,7 @@ export const MarketItemDetailPage = () => {
         {marketItem.images.length > 0 ? (
           <img
             className="w-[300px] md:w-[595px] h-[200px] md:h-[470px] object-cover object-center rounded-md bg-silver cursor-pointer transition-opacity hover:opacity-90 active:opacity-80"
-            src={
-              '' + marketItem.images?.slice(0, 1).map((img) => img.imageURL)
-            }
+            src={'' + marketItem.images?.slice(0, 1).map((img) => img.imageURL)}
             onError={addDefaultSrc}
             onClick={() => setShowGallery(0)}
             alt=""
@@ -56,7 +54,7 @@ export const MarketItemDetailPage = () => {
         ) : (
           <div>
             <input
-              accept=".jpg, .jpeg, .png, .heic"
+              accept=".jpg, .jpeg, .png, .heic, .webp"
               className="hidden"
               type="file"
               name="input_image"
