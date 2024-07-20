@@ -91,7 +91,7 @@ const GalleryModal = (props: GalleryModalProps) => {
         {changeable && (
           <div>
             <input
-              accept=".jpg, .jpeg, .png"
+              accept=".jpg, .jpeg, .png, .heic, .webp"
               className="hidden"
               type="file"
               name="input_image"
