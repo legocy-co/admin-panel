@@ -8,7 +8,7 @@ The application follows a layered architecture:
 
 * **Data:** Stores JSON data.
 * **Deployment:** Handles web server configuration and deployment.
-* **Pages:** Contains the user interface, including HTML, CSS, and TSX components.
+* **Pages:** Contains the user interface, including TSX components.
 * **Features:** Implements the core functionalities of the application, such as form validation, API interactions, and data management.
 * **Services:** Interacts with the backend API for data retrieval and manipulation.
 * **Shared:** Contains reusable components and utility functions.
