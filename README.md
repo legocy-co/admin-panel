@@ -19,4 +19,4 @@ The application follows a layered architecture:
 * **API Interactions:** Communicates with the backend API to retrieve and update data.
 * **Data Management:** Handles the storage and retrieval of data.
 * **Security:** Implements measures to protect against unauthorized access and data breaches.
-* **Technologies:** HTML, Sass, TypeScript, Tailwind CSS
+* **Technologies:** HTML, SCSS, TypeScript, Tailwind CSS
