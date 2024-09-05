@@ -3,10 +3,13 @@ $gallery-background: #191515cc;
 .gallery {
   padding: 2rem 1.4rem;
   background: var(--black);
-
+  overflow: auto;
   display: flex;
   flex-direction: column;
   font-size: 1.25rem;
+  @media (max-height: 600px) {
+    padding-top: 300px;
+  }
 
   &--main {
     display: flex;
@@ -20,8 +23,12 @@ $gallery-background: #191515cc;
     background-color: $gallery-background;
     color: white;
     transition: opacity 0.1s;
-    &:hover {opacity: 0.9}
-    &:active {opacity: 0.8}
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      opacity: 0.8;
+    }
     @media (max-width: 600px) {
       display: none;
     }
@@ -32,12 +39,17 @@ $gallery-background: #191515cc;
     align-items: center;
     justify-content: center;
     width: 500px;
+    aspect-ratio: 1;
     border-radius: 6px;
     cursor: pointer;
     background: $gallery-background;
     transition: opacity 0.1s;
-    &:hover {opacity: 0.9}
-    &:active {opacity: 0.8}
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      opacity: 0.8;
+    }
   }
 
   &--index {
@@ -56,24 +68,33 @@ $gallery-background: #191515cc;
 
     &_member {
       width: 50px;
+      aspect-ratio: 1;
       border-radius: 6px;
       transition: opacity 0.1s;
       cursor: pointer;
       background-color: $gallery-background;
-      &:hover {opacity: 0.9}
-      &:active {opacity: 0.8}
+      &:hover {
+        opacity: 0.9;
+      }
+      &:active {
+        opacity: 0.8;
+      }
     }
 
     &_input {
       text-align: center;
       cursor: pointer;
-      background: #FFD540;
+      background: #ffd540;
       padding: 0 5px;
       border-radius: 100%;
       color: black;
       transition: background-color;
-      &:hover {background: #f3cb3c}
-      &:active {background: #e5bf38}
+      &:hover {
+        background: #f3cb3c;
+      }
+      &:active {
+        background: #e5bf38;
+      }
     }
 
     &_delete {
@@ -87,8 +108,12 @@ $gallery-background: #191515cc;
       border-radius: 100%;
       background: #cccccc;
       transition: opacity 0.1s;
-      &:hover {opacity: 0.9}
-      &:active {opacity: 0.8}
+      &:hover {
+        opacity: 0.9;
+      }
+      &:active {
+        opacity: 0.8;
+      }
     }
   }
 }
