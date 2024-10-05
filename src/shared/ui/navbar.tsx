@@ -90,9 +90,14 @@ persist({
   store: $openedGroups,
 });
 
-export const Navbar = () => {
+export const Navbar = (props: { isHidden: boolean }) => {
   return (
-    <nav className="h-screen flex justify-between flex-col w-40 bg-white bg-opacity-5 px-2 pt-6 pb-2 overflow-auto">
+    <nav
+      className={clsx(
+        'h-screen flex justify-between flex-col w-40 bg-white bg-opacity-5 px-2 pt-6 pb-2 overflow-auto',
+        { hidden: props.isHidden }
+      )}
+    >
       <img src="/logo.svg" alt="" className="mx-auto mb-12 flex-shrink-0" />
       <div className="flex-grow flex flex-col space-y-3">
         {navigationItemsGroups.map((item) => (
